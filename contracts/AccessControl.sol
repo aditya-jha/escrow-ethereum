@@ -21,6 +21,7 @@ contract AccessControl is Helpers {
     }
 
     function transferOwnership(address _newOwner) public onlyOwner {
+        require(_newOwner != address(0));
         owner = _newOwner;
     }
 }
