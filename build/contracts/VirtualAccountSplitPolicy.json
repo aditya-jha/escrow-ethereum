@@ -169,7 +169,7 @@
       "absolutePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/VirtualAccountSplitPolicy.sol",
       "exportedSymbols": {
         "VirtualAccountSplitPolicy": [
-          634
+          632
         ]
       }
     },
@@ -183,7 +183,7 @@
             ".18"
           ]
         },
-        "id": 512,
+        "id": 510,
         "name": "PragmaDirective",
         "src": "0:24:4"
       },
@@ -192,13 +192,13 @@
           "SourceUnit": 54,
           "absolutePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/AccessControl.sol",
           "file": "./AccessControl.sol",
-          "scope": 635,
+          "scope": 633,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 513,
+        "id": 511,
         "name": "ImportDirective",
         "src": "26:29:4"
       },
@@ -212,12 +212,12 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            634,
+            632,
             53,
             247
           ],
           "name": "VirtualAccountSplitPolicy",
-          "scope": 635
+          "scope": 633
         },
         "children": [
           {
@@ -234,12 +234,12 @@
                   "referencedDeclaration": 53,
                   "type": "contract AccessControl"
                 },
-                "id": 514,
+                "id": 512,
                 "name": "UserDefinedTypeName",
                 "src": "95:13:4"
               }
             ],
-            "id": 515,
+            "id": 513,
             "name": "InheritanceSpecifier",
             "src": "95:13:4"
           },
@@ -247,7 +247,7 @@
             "attributes": {
               "constant": false,
               "name": "VirtualAccountSplitPolicyContractMapping",
-              "scope": 634,
+              "scope": 632,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(bytes32 => address)",
@@ -265,7 +265,7 @@
                       "name": "bytes32",
                       "type": "bytes32"
                     },
-                    "id": 516,
+                    "id": 514,
                     "name": "ElementaryTypeName",
                     "src": "124:7:4"
                   },
@@ -274,17 +274,17 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 517,
+                    "id": 515,
                     "name": "ElementaryTypeName",
                     "src": "135:7:4"
                   }
                 ],
-                "id": 518,
+                "id": 516,
                 "name": "Mapping",
                 "src": "116:27:4"
               }
             ],
-            "id": 519,
+            "id": 517,
             "name": "VariableDeclaration",
             "src": "116:68:4"
           },
@@ -295,7 +295,7 @@
               "isConstructor": false,
               "name": "addNewSplitPolicy",
               "payable": false,
-              "scope": 634,
+              "scope": 632,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -307,7 +307,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "virtual_account_number",
-                      "scope": 569,
+                      "scope": 567,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "string memory",
@@ -320,12 +320,12 @@
                           "name": "string",
                           "type": "string storage pointer"
                         },
-                        "id": 520,
+                        "id": 518,
                         "name": "ElementaryTypeName",
                         "src": "218:6:4"
                       }
                     ],
-                    "id": 521,
+                    "id": 519,
                     "name": "VariableDeclaration",
                     "src": "218:29:4"
                   },
@@ -333,7 +333,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "split_contract_address",
-                      "scope": 569,
+                      "scope": 567,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -346,17 +346,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 522,
+                        "id": 520,
                         "name": "ElementaryTypeName",
                         "src": "249:7:4"
                       }
                     ],
-                    "id": 523,
+                    "id": 521,
                     "name": "VariableDeclaration",
                     "src": "249:30:4"
                   }
                 ],
-                "id": 524,
+                "id": 522,
                 "name": "ParameterList",
                 "src": "217:63:4"
               },
@@ -366,7 +366,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 569,
+                      "scope": 567,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -379,17 +379,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 527,
+                        "id": 525,
                         "name": "ElementaryTypeName",
                         "src": "307:4:4"
                       }
                     ],
-                    "id": 528,
+                    "id": 526,
                     "name": "VariableDeclaration",
                     "src": "307:4:4"
                   }
                 ],
-                "id": 529,
+                "id": 527,
                 "name": "ParameterList",
                 "src": "306:6:4"
               },
@@ -410,12 +410,12 @@
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
-                    "id": 525,
+                    "id": 523,
                     "name": "Identifier",
                     "src": "288:9:4"
                   }
                 ],
-                "id": 526,
+                "id": 524,
                 "name": "ModifierInvocation",
                 "src": "288:9:4"
               },
@@ -424,7 +424,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        531
+                        529
                       ]
                     },
                     "children": [
@@ -432,7 +432,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "virtual_account_number_bytes",
-                          "scope": 569,
+                          "scope": 567,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "bytes32",
@@ -445,12 +445,12 @@
                               "name": "bytes32",
                               "type": "bytes32"
                             },
-                            "id": 530,
+                            "id": 528,
                             "name": "ElementaryTypeName",
                             "src": "381:7:4"
                           }
                         ],
-                        "id": 531,
+                        "id": 529,
                         "name": "VariableDeclaration",
                         "src": "381:36:4"
                       },
@@ -484,7 +484,7 @@
                               "type": "function (string memory) pure returns (bytes32)",
                               "value": "_stringToBytes32"
                             },
-                            "id": 532,
+                            "id": 530,
                             "name": "Identifier",
                             "src": "420:16:4"
                           },
@@ -494,21 +494,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 521,
+                              "referencedDeclaration": 519,
                               "type": "string memory",
                               "value": "virtual_account_number"
                             },
-                            "id": 533,
+                            "id": 531,
                             "name": "Identifier",
                             "src": "437:22:4"
                           }
                         ],
-                        "id": 534,
+                        "id": 532,
                         "name": "FunctionCall",
                         "src": "420:40:4"
                       }
                     ],
-                    "id": 535,
+                    "id": 533,
                     "name": "VariableDeclarationStatement",
                     "src": "381:79:4"
                   },
@@ -540,11 +540,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 536,
+                            "id": 534,
                             "name": "Identifier",
                             "src": "471:7:4"
                           },
@@ -569,11 +569,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 523,
+                                  "referencedDeclaration": 521,
                                   "type": "address",
                                   "value": "split_contract_address"
                                 },
-                                "id": 537,
+                                "id": 535,
                                 "name": "Identifier",
                                 "src": "479:22:4"
                               },
@@ -607,7 +607,7 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 538,
+                                    "id": 536,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "505:7:4"
                                   },
@@ -624,27 +624,27 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 539,
+                                    "id": 537,
                                     "name": "Literal",
                                     "src": "513:1:4"
                                   }
                                 ],
-                                "id": 540,
+                                "id": 538,
                                 "name": "FunctionCall",
                                 "src": "505:10:4"
                               }
                             ],
-                            "id": 541,
+                            "id": 539,
                             "name": "BinaryOperation",
                             "src": "479:36:4"
                           }
                         ],
-                        "id": 542,
+                        "id": 540,
                         "name": "FunctionCall",
                         "src": "471:45:4"
                       }
                     ],
-                    "id": 543,
+                    "id": 541,
                     "name": "ExpressionStatement",
                     "src": "471:45:4"
                   },
@@ -676,11 +676,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 544,
+                            "id": 542,
                             "name": "Identifier",
                             "src": "526:7:4"
                           },
@@ -714,7 +714,7 @@
                                   "type": "function (address) view returns (bool)",
                                   "value": "isContract"
                                 },
-                                "id": 545,
+                                "id": 543,
                                 "name": "Identifier",
                                 "src": "534:10:4"
                               },
@@ -724,26 +724,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 523,
+                                  "referencedDeclaration": 521,
                                   "type": "address",
                                   "value": "split_contract_address"
                                 },
-                                "id": 546,
+                                "id": 544,
                                 "name": "Identifier",
                                 "src": "545:22:4"
                               }
                             ],
-                            "id": 547,
+                            "id": 545,
                             "name": "FunctionCall",
                             "src": "534:34:4"
                           }
                         ],
-                        "id": 548,
+                        "id": 546,
                         "name": "FunctionCall",
                         "src": "526:43:4"
                       }
                     ],
-                    "id": 549,
+                    "id": 547,
                     "name": "ExpressionStatement",
                     "src": "526:43:4"
                   },
@@ -775,11 +775,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 550,
+                            "id": 548,
                             "name": "Identifier",
                             "src": "580:7:4"
                           },
@@ -814,11 +814,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 519,
+                                      "referencedDeclaration": 517,
                                       "type": "mapping(bytes32 => address)",
                                       "value": "VirtualAccountSplitPolicyContractMapping"
                                     },
-                                    "id": 551,
+                                    "id": 549,
                                     "name": "Identifier",
                                     "src": "588:40:4"
                                   },
@@ -828,16 +828,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 531,
+                                      "referencedDeclaration": 529,
                                       "type": "bytes32",
                                       "value": "virtual_account_number_bytes"
                                     },
-                                    "id": 552,
+                                    "id": 550,
                                     "name": "Identifier",
                                     "src": "629:28:4"
                                   }
                                 ],
-                                "id": 553,
+                                "id": 551,
                                 "name": "IndexAccess",
                                 "src": "588:70:4"
                               },
@@ -871,7 +871,7 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 554,
+                                    "id": 552,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "662:7:4"
                                   },
@@ -888,27 +888,27 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 555,
+                                    "id": 553,
                                     "name": "Literal",
                                     "src": "670:1:4"
                                   }
                                 ],
-                                "id": 556,
+                                "id": 554,
                                 "name": "FunctionCall",
                                 "src": "662:10:4"
                               }
                             ],
-                            "id": 557,
+                            "id": 555,
                             "name": "BinaryOperation",
                             "src": "588:84:4"
                           }
                         ],
-                        "id": 558,
+                        "id": 556,
                         "name": "FunctionCall",
                         "src": "580:93:4"
                       }
                     ],
-                    "id": 559,
+                    "id": 557,
                     "name": "ExpressionStatement",
                     "src": "580:93:4"
                   },
@@ -941,11 +941,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 519,
+                                  "referencedDeclaration": 517,
                                   "type": "mapping(bytes32 => address)",
                                   "value": "VirtualAccountSplitPolicyContractMapping"
                                 },
-                                "id": 560,
+                                "id": 558,
                                 "name": "Identifier",
                                 "src": "684:40:4"
                               },
@@ -955,16 +955,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 531,
+                                  "referencedDeclaration": 529,
                                   "type": "bytes32",
                                   "value": "virtual_account_number_bytes"
                                 },
-                                "id": 561,
+                                "id": 559,
                                 "name": "Identifier",
                                 "src": "725:28:4"
                               }
                             ],
-                            "id": 562,
+                            "id": 560,
                             "name": "IndexAccess",
                             "src": "684:70:4"
                           },
@@ -974,27 +974,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 523,
+                              "referencedDeclaration": 521,
                               "type": "address",
                               "value": "split_contract_address"
                             },
-                            "id": 563,
+                            "id": 561,
                             "name": "Identifier",
                             "src": "757:22:4"
                           }
                         ],
-                        "id": 564,
+                        "id": 562,
                         "name": "Assignment",
                         "src": "684:95:4"
                       }
                     ],
-                    "id": 565,
+                    "id": 563,
                     "name": "ExpressionStatement",
                     "src": "684:95:4"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 529
+                      "functionReturnParameters": 527
                     },
                     "children": [
                       {
@@ -1010,22 +1010,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 566,
+                        "id": 564,
                         "name": "Literal",
                         "src": "797:4:4"
                       }
                     ],
-                    "id": 567,
+                    "id": 565,
                     "name": "Return",
                     "src": "790:11:4"
                   }
                 ],
-                "id": 568,
+                "id": 566,
                 "name": "Block",
                 "src": "313:495:4"
               }
             ],
-            "id": 569,
+            "id": 567,
             "name": "FunctionDefinition",
             "src": "191:617:4"
           },
@@ -1036,7 +1036,7 @@
               "isConstructor": false,
               "name": "updateSplitPolicy",
               "payable": false,
-              "scope": 634,
+              "scope": 632,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1048,7 +1048,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "virtual_account_number",
-                      "scope": 615,
+                      "scope": 613,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "string memory",
@@ -1061,12 +1061,12 @@
                           "name": "string",
                           "type": "string storage pointer"
                         },
-                        "id": 570,
+                        "id": 568,
                         "name": "ElementaryTypeName",
                         "src": "841:6:4"
                       }
                     ],
-                    "id": 571,
+                    "id": 569,
                     "name": "VariableDeclaration",
                     "src": "841:29:4"
                   },
@@ -1074,7 +1074,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "split_contract_address",
-                      "scope": 615,
+                      "scope": 613,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1087,17 +1087,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 572,
+                        "id": 570,
                         "name": "ElementaryTypeName",
                         "src": "872:7:4"
                       }
                     ],
-                    "id": 573,
+                    "id": 571,
                     "name": "VariableDeclaration",
                     "src": "872:30:4"
                   }
                 ],
-                "id": 574,
+                "id": 572,
                 "name": "ParameterList",
                 "src": "840:63:4"
               },
@@ -1107,7 +1107,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 615,
+                      "scope": 613,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1120,17 +1120,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 577,
+                        "id": 575,
                         "name": "ElementaryTypeName",
                         "src": "930:4:4"
                       }
                     ],
-                    "id": 578,
+                    "id": 576,
                     "name": "VariableDeclaration",
                     "src": "930:4:4"
                   }
                 ],
-                "id": 579,
+                "id": 577,
                 "name": "ParameterList",
                 "src": "929:6:4"
               },
@@ -1151,12 +1151,12 @@
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
-                    "id": 575,
+                    "id": 573,
                     "name": "Identifier",
                     "src": "911:9:4"
                   }
                 ],
-                "id": 576,
+                "id": 574,
                 "name": "ModifierInvocation",
                 "src": "911:9:4"
               },
@@ -1165,7 +1165,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        581
+                        579
                       ]
                     },
                     "children": [
@@ -1173,7 +1173,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "virtual_account_number_bytes",
-                          "scope": 615,
+                          "scope": 613,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "bytes32",
@@ -1186,12 +1186,12 @@
                               "name": "bytes32",
                               "type": "bytes32"
                             },
-                            "id": 580,
+                            "id": 578,
                             "name": "ElementaryTypeName",
                             "src": "946:7:4"
                           }
                         ],
-                        "id": 581,
+                        "id": 579,
                         "name": "VariableDeclaration",
                         "src": "946:36:4"
                       },
@@ -1225,7 +1225,7 @@
                               "type": "function (string memory) pure returns (bytes32)",
                               "value": "_stringToBytes32"
                             },
-                            "id": 582,
+                            "id": 580,
                             "name": "Identifier",
                             "src": "985:16:4"
                           },
@@ -1235,21 +1235,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 571,
+                              "referencedDeclaration": 569,
                               "type": "string memory",
                               "value": "virtual_account_number"
                             },
-                            "id": 583,
+                            "id": 581,
                             "name": "Identifier",
                             "src": "1002:22:4"
                           }
                         ],
-                        "id": 584,
+                        "id": 582,
                         "name": "FunctionCall",
                         "src": "985:40:4"
                       }
                     ],
-                    "id": 585,
+                    "id": 583,
                     "name": "VariableDeclarationStatement",
                     "src": "946:79:4"
                   },
@@ -1281,11 +1281,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 586,
+                            "id": 584,
                             "name": "Identifier",
                             "src": "1036:7:4"
                           },
@@ -1310,11 +1310,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 573,
+                                  "referencedDeclaration": 571,
                                   "type": "address",
                                   "value": "split_contract_address"
                                 },
-                                "id": 587,
+                                "id": 585,
                                 "name": "Identifier",
                                 "src": "1044:22:4"
                               },
@@ -1348,7 +1348,7 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 588,
+                                    "id": 586,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "1070:7:4"
                                   },
@@ -1365,27 +1365,27 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 589,
+                                    "id": 587,
                                     "name": "Literal",
                                     "src": "1078:1:4"
                                   }
                                 ],
-                                "id": 590,
+                                "id": 588,
                                 "name": "FunctionCall",
                                 "src": "1070:10:4"
                               }
                             ],
-                            "id": 591,
+                            "id": 589,
                             "name": "BinaryOperation",
                             "src": "1044:36:4"
                           }
                         ],
-                        "id": 592,
+                        "id": 590,
                         "name": "FunctionCall",
                         "src": "1036:45:4"
                       }
                     ],
-                    "id": 593,
+                    "id": 591,
                     "name": "ExpressionStatement",
                     "src": "1036:45:4"
                   },
@@ -1417,11 +1417,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 594,
+                            "id": 592,
                             "name": "Identifier",
                             "src": "1091:7:4"
                           },
@@ -1455,7 +1455,7 @@
                                   "type": "function (address) view returns (bool)",
                                   "value": "isContract"
                                 },
-                                "id": 595,
+                                "id": 593,
                                 "name": "Identifier",
                                 "src": "1099:10:4"
                               },
@@ -1465,26 +1465,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 573,
+                                  "referencedDeclaration": 571,
                                   "type": "address",
                                   "value": "split_contract_address"
                                 },
-                                "id": 596,
+                                "id": 594,
                                 "name": "Identifier",
                                 "src": "1110:22:4"
                               }
                             ],
-                            "id": 597,
+                            "id": 595,
                             "name": "FunctionCall",
                             "src": "1099:34:4"
                           }
                         ],
-                        "id": 598,
+                        "id": 596,
                         "name": "FunctionCall",
                         "src": "1091:43:4"
                       }
                     ],
-                    "id": 599,
+                    "id": 597,
                     "name": "ExpressionStatement",
                     "src": "1091:43:4"
                   },
@@ -1516,11 +1516,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 647,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 600,
+                            "id": 598,
                             "name": "Identifier",
                             "src": "1144:7:4"
                           },
@@ -1555,11 +1555,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 519,
+                                      "referencedDeclaration": 517,
                                       "type": "mapping(bytes32 => address)",
                                       "value": "VirtualAccountSplitPolicyContractMapping"
                                     },
-                                    "id": 601,
+                                    "id": 599,
                                     "name": "Identifier",
                                     "src": "1152:40:4"
                                   },
@@ -1569,16 +1569,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 581,
+                                      "referencedDeclaration": 579,
                                       "type": "bytes32",
                                       "value": "virtual_account_number_bytes"
                                     },
-                                    "id": 602,
+                                    "id": 600,
                                     "name": "Identifier",
                                     "src": "1193:28:4"
                                   }
                                 ],
-                                "id": 603,
+                                "id": 601,
                                 "name": "IndexAccess",
                                 "src": "1152:70:4"
                               },
@@ -1588,26 +1588,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 573,
+                                  "referencedDeclaration": 571,
                                   "type": "address",
                                   "value": "split_contract_address"
                                 },
-                                "id": 604,
+                                "id": 602,
                                 "name": "Identifier",
                                 "src": "1226:22:4"
                               }
                             ],
-                            "id": 605,
+                            "id": 603,
                             "name": "BinaryOperation",
                             "src": "1152:96:4"
                           }
                         ],
-                        "id": 606,
+                        "id": 604,
                         "name": "FunctionCall",
                         "src": "1144:105:4"
                       }
                     ],
-                    "id": 607,
+                    "id": 605,
                     "name": "ExpressionStatement",
                     "src": "1144:105:4"
                   },
@@ -1640,11 +1640,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 519,
+                                  "referencedDeclaration": 517,
                                   "type": "mapping(bytes32 => address)",
                                   "value": "VirtualAccountSplitPolicyContractMapping"
                                 },
-                                "id": 608,
+                                "id": 606,
                                 "name": "Identifier",
                                 "src": "1260:40:4"
                               },
@@ -1654,16 +1654,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 581,
+                                  "referencedDeclaration": 579,
                                   "type": "bytes32",
                                   "value": "virtual_account_number_bytes"
                                 },
-                                "id": 609,
+                                "id": 607,
                                 "name": "Identifier",
                                 "src": "1301:28:4"
                               }
                             ],
-                            "id": 610,
+                            "id": 608,
                             "name": "IndexAccess",
                             "src": "1260:70:4"
                           },
@@ -1673,31 +1673,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 573,
+                              "referencedDeclaration": 571,
                               "type": "address",
                               "value": "split_contract_address"
                             },
-                            "id": 611,
+                            "id": 609,
                             "name": "Identifier",
                             "src": "1333:22:4"
                           }
                         ],
-                        "id": 612,
+                        "id": 610,
                         "name": "Assignment",
                         "src": "1260:95:4"
                       }
                     ],
-                    "id": 613,
+                    "id": 611,
                     "name": "ExpressionStatement",
                     "src": "1260:95:4"
                   }
                 ],
-                "id": 614,
+                "id": 612,
                 "name": "Block",
                 "src": "936:426:4"
               }
             ],
-            "id": 615,
+            "id": 613,
             "name": "FunctionDefinition",
             "src": "814:548:4"
           },
@@ -1711,7 +1711,7 @@
               ],
               "name": "getSplitPolicyAddress",
               "payable": false,
-              "scope": 634,
+              "scope": 632,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -1723,7 +1723,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "virtual_account_number",
-                      "scope": 633,
+                      "scope": 631,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "string memory",
@@ -1736,17 +1736,17 @@
                           "name": "string",
                           "type": "string storage pointer"
                         },
-                        "id": 616,
+                        "id": 614,
                         "name": "ElementaryTypeName",
                         "src": "1399:6:4"
                       }
                     ],
-                    "id": 617,
+                    "id": 615,
                     "name": "VariableDeclaration",
                     "src": "1399:29:4"
                   }
                 ],
-                "id": 618,
+                "id": 616,
                 "name": "ParameterList",
                 "src": "1398:31:4"
               },
@@ -1756,7 +1756,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 633,
+                      "scope": 631,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1769,17 +1769,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 619,
+                        "id": 617,
                         "name": "ElementaryTypeName",
                         "src": "1451:7:4"
                       }
                     ],
-                    "id": 620,
+                    "id": 618,
                     "name": "VariableDeclaration",
                     "src": "1451:7:4"
                   }
                 ],
-                "id": 621,
+                "id": 619,
                 "name": "ParameterList",
                 "src": "1450:9:4"
               },
@@ -1788,7 +1788,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        623
+                        621
                       ]
                     },
                     "children": [
@@ -1796,7 +1796,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "virtual_account_number_bytes",
-                          "scope": 633,
+                          "scope": 631,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "bytes32",
@@ -1809,12 +1809,12 @@
                               "name": "bytes32",
                               "type": "bytes32"
                             },
-                            "id": 622,
+                            "id": 620,
                             "name": "ElementaryTypeName",
                             "src": "1470:7:4"
                           }
                         ],
-                        "id": 623,
+                        "id": 621,
                         "name": "VariableDeclaration",
                         "src": "1470:36:4"
                       },
@@ -1848,7 +1848,7 @@
                               "type": "function (string memory) pure returns (bytes32)",
                               "value": "_stringToBytes32"
                             },
-                            "id": 624,
+                            "id": 622,
                             "name": "Identifier",
                             "src": "1509:16:4"
                           },
@@ -1858,27 +1858,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 617,
+                              "referencedDeclaration": 615,
                               "type": "string memory",
                               "value": "virtual_account_number"
                             },
-                            "id": 625,
+                            "id": 623,
                             "name": "Identifier",
                             "src": "1526:22:4"
                           }
                         ],
-                        "id": 626,
+                        "id": 624,
                         "name": "FunctionCall",
                         "src": "1509:40:4"
                       }
                     ],
-                    "id": 627,
+                    "id": 625,
                     "name": "VariableDeclarationStatement",
                     "src": "1470:79:4"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 621
+                      "functionReturnParameters": 619
                     },
                     "children": [
                       {
@@ -1897,11 +1897,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 519,
+                              "referencedDeclaration": 517,
                               "type": "mapping(bytes32 => address)",
                               "value": "VirtualAccountSplitPolicyContractMapping"
                             },
-                            "id": 628,
+                            "id": 626,
                             "name": "Identifier",
                             "src": "1566:40:4"
                           },
@@ -1911,41 +1911,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 623,
+                              "referencedDeclaration": 621,
                               "type": "bytes32",
                               "value": "virtual_account_number_bytes"
                             },
-                            "id": 629,
+                            "id": 627,
                             "name": "Identifier",
                             "src": "1607:28:4"
                           }
                         ],
-                        "id": 630,
+                        "id": 628,
                         "name": "IndexAccess",
                         "src": "1566:70:4"
                       }
                     ],
-                    "id": 631,
+                    "id": 629,
                     "name": "Return",
                     "src": "1559:77:4"
                   }
                 ],
-                "id": 632,
+                "id": 630,
                 "name": "Block",
                 "src": "1460:183:4"
               }
             ],
-            "id": 633,
+            "id": 631,
             "name": "FunctionDefinition",
             "src": "1368:275:4"
           }
         ],
-        "id": 634,
+        "id": 632,
         "name": "ContractDefinition",
         "src": "57:1588:4"
       }
     ],
-    "id": 635,
+    "id": 633,
     "name": "SourceUnit",
     "src": "0:1645:4"
   },
@@ -1955,5 +1955,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-12T07:57:25.218Z"
+  "updatedAt": "2018-03-12T09:58:30.128Z"
 }

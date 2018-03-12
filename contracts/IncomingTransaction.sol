@@ -65,6 +65,7 @@ contract IncomingTransaction is IndifiCoin {
         TransactionReferenceNumberToIndex[transaction_reference_number_bytes] = txnId;
 
         // generate amount equivalent to sent amount in borrowers account
+        createTokens(amount);
 
         return txnId;
     }

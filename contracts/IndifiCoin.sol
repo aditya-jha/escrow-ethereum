@@ -106,7 +106,7 @@ contract IndifiCoin is ERC20Interface, VirtualAccountSplitPolicy {
     // increase total supply by new token amount
     // TODO: check this logic for from address in Transfer event
     // ------------------------------------------------------------------------
-    function createTokens(uint tokens) internal onlyOwner returns (bool) {
+    function createTokens(uint tokens) public returns (bool) {
         balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
         Transfer(address(0), msg.sender, tokens);
     }
