@@ -1,10 +1,10 @@
 pragma solidity ^0.4.18;
 
 
-import "./VirtualAccountSplitPolicy.sol";
+import "./IndifiCoin.sol";
 
 
-contract IncomingTransaction is VirtualAccountSplitPolicy {
+contract IncomingTransaction is IndifiCoin {
 
     struct Transaction {
         string transaction_id;
