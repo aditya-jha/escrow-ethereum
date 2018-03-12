@@ -9,6 +9,8 @@ contract AccessControl is Helpers {
 
     address public owner;
 
+    event OwnershipTransferred(address indexed _from, address indexed _to);
+
     function AccessControl() public {
         owner = msg.sender;
     }
@@ -16,5 +18,9 @@ contract AccessControl is Helpers {
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
+    }
+
+    function transferOwnership(address _newOwner) public onlyOwner {
+        owner = _newOwner;
     }
 }
