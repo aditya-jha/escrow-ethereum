@@ -1,4 +1,4 @@
-pragma solidity 0.4.20;
+pragma solidity ^0.4.18;
 
 
 import "./VirtualAccountSplitPolicy.sol";
@@ -9,7 +9,7 @@ contract IncomingTransaction is VirtualAccountSplitPolicy {
     struct Transaction {
         string transaction_id;
         string recipient_account_number;
-        unit256 amount;
+        uint256 amount;
         string remitter_name;
         string remitter_account;
         string transaction_reference_number;
@@ -25,57 +25,26 @@ contract IncomingTransaction is VirtualAccountSplitPolicy {
 
     mapping(bytes32 => uint256) public TransactionReferenceNumberToIndex;
 
-    function IncomingTransaction() {
-
-    }
-
-    function _addNewTransaction(
-        string transaction_id,
-        string recipient_account_number,
-        unit256 amount,
-        string remitter_name,
-        string remitter_account,
-        string transaction_reference_number,
-        string virtual_account_number,
-        string mode,
-        string transaction_date
-    ) internal returns (uint256) {
-        Transaction memory txn = Transaction({
-            transaction_id : transaction_id,
-            recipient_account_number : recipient_account_number,
-            amount : amount,
-            remitter_name : remitter_name,
-            remitter_account : remitter_account,
-            transaction_reference_number : transaction_reference_number,
-            virtual_account_number : virtual_account_number,
-            mode : mode,
-            transaction_date : transaction_date,
-            timestamp : uint64(now)
-            });
-
-        uint256 txnId = transactions.push(txn) - 1;
-        TransactionIDToIndex[transaction_id_bytes] = txnId;
-        TransactionReferenceNumberToIndex[transaction_reference_number_bytes] = txnId;
-
-        return txnId;
+    function IncomingTransaction() public {
+        owner = msg.sender;
     }
 
     function newIncomingTransaction(
         string transaction_id,
         string recipient_account_number,
-        unit256 amount,
+        uint256 amount,
         string remitter_name,
         string remitter_account,
         string transaction_reference_number,
         string virtual_account_number,
         string mode,
         string transaction_date
-    ) public ownerOwner returns (uint256) {
+    ) public onlyOwner returns (uint256) {
         bytes32 transaction_id_bytes = _stringToBytes32(transaction_id);
         bytes32 transaction_reference_number_bytes = _stringToBytes32(transaction_reference_number);
 
         require(TransactionIDToIndex[transaction_id_bytes] <= 0);
-        require(TransactionIndexToTransactionReferenceNumber[transaction_reference_number_bytes] <= 0);
+        require(TransactionReferenceNumberToIndex[transaction_reference_number_bytes] <= 0);
 
         Transaction memory txn = Transaction({
             transaction_id : transaction_id,
