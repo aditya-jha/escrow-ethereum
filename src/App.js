@@ -11,7 +11,8 @@ import configureStore from "./reducers/store";
 import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_CONTRACT_REFERENCE} from "./reducers/web3js";
 import MyWeb3 from "./models/MyWeb3";
 import MuiThemeConfig from "./materialUIThemeConfig";
-import IncomingTransactionContract from "./../build/contracts/IncomingTransaction";
+// import IncomingTransactionContract from "./../build/contracts/IncomingTransaction";
+import IncomingTransactionContract from "./../build/contracts/IndifiCoin";
 import {BrowserRouter as Router} from "react-router-dom";
 
 const store = configureStore();
@@ -26,6 +27,7 @@ export default class App extends React.Component {
         if (typeof window.web3 !== "undefined") {
             // Use Mist/MetaMask's provider
             const web3js = new Web3(window.web3.currentProvider);
+            // const web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
             const myWeb3Instance = new MyWeb3();
             myWeb3Instance.setWeb3Instance(web3js);
 

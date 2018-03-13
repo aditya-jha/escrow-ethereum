@@ -1,11 +1,10 @@
 pragma solidity ^0.4.18;
 
 
-import "./VirtualAccountSplitPolicy.sol";
 import "./ERC20Interface.sol";
 
 
-contract IndifiCoin is ERC20Interface, VirtualAccountSplitPolicy {
+contract IndifiCoin is ERC20Interface {
 
     string constant public SYMBOL = "INDIFI";
     string constant public NAME = "Indifi Coin";
@@ -39,7 +38,7 @@ contract IndifiCoin is ERC20Interface, VirtualAccountSplitPolicy {
     // ------------------------------------------------------------------------
     // Get the token balance for account tokenOwner
     // ------------------------------------------------------------------------
-    function balanceOf(address tokenOwner) public constant returns (uint balance) {
+    function balanceOf(address tokenOwner) public constant returns (uint) {
         return balances[tokenOwner];
     }
 
@@ -107,6 +106,7 @@ contract IndifiCoin is ERC20Interface, VirtualAccountSplitPolicy {
     // TODO: check this logic for from address in Transfer event
     // ------------------------------------------------------------------------
     function createTokens(uint tokens) public returns (bool) {
+        _totalSupply = safeAdd(_totalSupply, tokens);
         balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
         Transfer(address(0), msg.sender, tokens);
     }
