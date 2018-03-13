@@ -13,7 +13,11 @@ import MyWeb3 from "./models/MyWeb3";
 import MuiThemeConfig from "./materialUIThemeConfig";
 // import IncomingTransactionContract from "./../build/contracts/IncomingTransaction";
 import IncomingTransactionContract from "./../build/contracts/IndifiCoin";
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
+
+import _404 from "./components/_404";
+import * as URLS from "./data/Urls";
+import IndifiCoin from "./containers/IndifiCoin";
 
 const store = configureStore();
 const muiTheme = getMuiTheme(MuiThemeConfig);
@@ -66,7 +70,12 @@ export default class App extends React.Component {
                 <Router>
                     <MuiThemeProvider muiTheme={muiTheme}>
                         <div>
-                            <h1>Hello Escrow</h1>
+                            <Link to={URLS.INDIFI_COIN}>Coin</Link>
+                            <Switch>
+                                <Route exact path={URLS.HOME} render={() => (<h2>Hi</h2>)}/>
+                                <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
+                                <Route path="*" component={_404}/>
+                            </Switch>
                         </div>
                     </MuiThemeProvider>
                 </Router>
