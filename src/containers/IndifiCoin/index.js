@@ -11,7 +11,8 @@ export default class IndifiCoin extends React.Component {
 
     render() {
         return (
-            <h1>Indifi Coin</h1>
+            <div>
+            </div>
         )
     }
 }

@@ -4,15 +4,11 @@
 
 import React from "react";
 import {Provider} from "react-redux";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Web3 from "web3";
 import configureStore from "./reducers/store";
 import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_CONTRACT_REFERENCE} from "./reducers/web3js";
 import MyWeb3 from "./models/MyWeb3";
 import IndifiCoinContract from "./models/IndifiCoinContract";
-
-import MuiThemeConfig from "./materialUIThemeConfig";
 
 import IncomingTransactionContract from "./../build/contracts/IndifiCoin";
 import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
@@ -21,8 +17,10 @@ import _404 from "./components/_404";
 import * as URLS from "./data/Urls";
 import IndifiCoin from "./containers/IndifiCoin";
 
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap";
+
 const store = configureStore();
-const muiTheme = getMuiTheme(MuiThemeConfig);
 
 let events;
 
@@ -84,16 +82,14 @@ export default class App extends React.Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <MuiThemeProvider muiTheme={muiTheme}>
-                        <div>
-                            <Link to={URLS.INDIFI_COIN}>Coin</Link>
-                            <Switch>
-                                <Route exact path={URLS.HOME} render={() => (<h2>Hi</h2>)}/>
-                                <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
-                                <Route path="*" component={_404}/>
-                            </Switch>
-                        </div>
-                    </MuiThemeProvider>
+                    <div>
+                        <Link to={URLS.INDIFI_COIN}>Coin</Link>
+                        <Switch>
+                            <Route exact path={URLS.HOME} render={() => (<h2>Hi</h2>)}/>
+                            <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
+                            <Route path="*" component={_404}/>
+                        </Switch>
+                    </div>
                 </Router>
             </Provider>
         )
