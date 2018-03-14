@@ -11,7 +11,7 @@ import configureStore from "./reducers/store";
 import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_CONTRACT_REFERENCE} from "./reducers/web3js";
 import MyWeb3 from "./models/MyWeb3";
 import MuiThemeConfig from "./materialUIThemeConfig";
-// import IncomingTransactionContract from "./../build/contracts/IncomingTransaction";
+
 import IncomingTransactionContract from "./../build/contracts/IndifiCoin";
 import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
 
