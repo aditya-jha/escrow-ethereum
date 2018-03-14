@@ -10,6 +10,8 @@ import Web3 from "web3";
 import configureStore from "./reducers/store";
 import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_CONTRACT_REFERENCE} from "./reducers/web3js";
 import MyWeb3 from "./models/MyWeb3";
+import IndifiCoinContract from "./models/IndifiCoinContract";
+
 import MuiThemeConfig from "./materialUIThemeConfig";
 
 import IncomingTransactionContract from "./../build/contracts/IndifiCoin";
@@ -21,6 +23,8 @@ import IndifiCoin from "./containers/IndifiCoin";
 
 const store = configureStore();
 const muiTheme = getMuiTheme(MuiThemeConfig);
+
+let events;
 
 export default class App extends React.Component {
     constructor(props) {
@@ -44,11 +48,23 @@ export default class App extends React.Component {
             myWeb3Instance.getEthereumNetworkVersion().then(netId => {
                 const {address} = networks[netId];
                 const contract = myWeb3Instance.getContractReference(address, abi);
+                const indifiCoinContract = new IndifiCoinContract(contract, myWeb3Instance);
+
                 store.dispatch({
                     type: SET_CONTRACT_REFERENCE,
                     contract: contract
                 });
-                window.contract = contract;
+                window.contract = indifiCoinContract;
+                events = contract.allEvents();
+                events.watch((error, event) => {
+                    debugger;
+                    if (error) {
+                        console.log("Error: " + error);
+                    } else {
+                        console.log(event.event + ": " + JSON.stringify(event.args));
+                    }
+                });
+
                 store.dispatch({
                     network: netId,
                     type: WEB3JS_NETWORK_ID
