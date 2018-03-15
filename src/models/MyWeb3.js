@@ -79,5 +79,18 @@ export default class MyWeb3 {
             })
         })
     }
+
+    getTransactionReceipt(hash) {
+        return new Promise((resolve, reject) => {
+            this._web3js.eth.getTransactionReceipt(hash, (error, result) => {
+                if (error) {
+                    return reject(error);
+                } else {
+                    return resolve(resolve);
+                }
+            })
+        });
+    }
 }
+
  

@@ -8,7 +8,7 @@ contract IndifiCoin is ERC20Interface {
 
     string constant public symbol = "INDIFI";
     string constant public name = "Indifi Coin";
-    uint8 constant public decimal = 4;
+    uint8 constant public decimals = 4;
     uint public _totalSupply;
 
     mapping(address => uint) internal balances;

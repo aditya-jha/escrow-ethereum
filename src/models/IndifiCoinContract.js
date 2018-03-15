@@ -12,16 +12,6 @@ export default class IndifiCoinContract {
         this.web3 = _web3;
     }
 
-    getTransactionObject(gasPrice, gasLimit) {
-        return {
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            value: 0,
-            data: "",
-            from: this.web3.getAccountOwner()
-        }
-    }
-
     static callback(resolve, reject) {
         return (error, result) => {
             if (error) {
@@ -29,6 +19,16 @@ export default class IndifiCoinContract {
             } else {
                 return resolve(result);
             }
+        }
+    }
+
+    getTransactionObject(gasPrice, gasLimit) {
+        return {
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            value: 0,
+            data: "",
+            from: this.web3.getAccountOwner()
         }
     }
 
@@ -44,13 +44,7 @@ export default class IndifiCoinContract {
 
     createTokens(amount, from, gasLimit, gasPrice) {
         return new Promise((resolve, reject) => {
-            this.contract.createTokens.sendTransaction(amount, {
-                gasPrice: gasPrice,
-                gasLimit: gasLimit,
-                value: 0,
-                data: "",
-                from: from
-            }, (error, result) => {
+            this.contract.createTokens.sendTransaction(amount, this.getTransactionObject(gasPrice, gasLimit), (error, result) => {
                 if (error) {
                     return reject(error);
                 } else {
@@ -76,5 +70,11 @@ export default class IndifiCoinContract {
         return new Promise((resolve, reject) => {
             this.contract.transferOwnership.sendTransaction(to, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         });
+    }
+
+    transferTokens(to, amount, gasPrice, gasLimit) {
+        return new Promise((resolve, reject) => {
+            this.contract.transferTokens.sendTransaction(to, amount, this.getTransactionObject(), IndifiCoinContract.callback(resolve, reject));
+        }); 
     }
 }
