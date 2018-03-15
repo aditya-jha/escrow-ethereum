@@ -63,12 +63,18 @@ export default class IndifiCoinContract {
     transferFrom(from, to, amount, gasLimit, gasPrice) {
         return new Promise((resolve, reject) => {
             this.contract.transferFrom.sendTransaction(from, to, amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
-        })
+        });
     }
 
     approve(spender, amount, gasLimit, gasPrice) {
         return new Promise((resolve, reject) => {
             this.contract.approve.sendTransaction(spender, amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
-        })
+        });
+    }
+
+    transferOwnerShip(to, gasPrice, gasLimit) {
+        return new Promise((resolve, reject) => {
+            this.contract.transferOwnership.sendTransaction(to, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
+        });
     }
 }
