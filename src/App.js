@@ -50,12 +50,11 @@ export default class App extends React.Component {
 
                 store.dispatch({
                     type: SET_CONTRACT_REFERENCE,
-                    contract: contract
+                    contract: indifiCoinContract
                 });
                 window.contract = indifiCoinContract;
                 events = contract.allEvents();
                 events.watch((error, event) => {
-                    debugger;
                     if (error) {
                         console.log("Error: " + error);
                     } else {
