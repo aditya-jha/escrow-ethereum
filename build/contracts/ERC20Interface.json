@@ -99,29 +99,6 @@
       "type": "function"
     },
     {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "uint256"
-        },
-        {
-          "name": "b",
-          "type": "uint256"
-        }
-      ],
-      "name": "safeSub",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
       "constant": false,
       "inputs": [
         {
@@ -148,6 +125,44 @@
       "constant": true,
       "inputs": [
         {
+          "name": "x",
+          "type": "bytes32"
+        }
+      ],
+      "name": "_bytes32ToString",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "s",
+          "type": "string"
+        }
+      ],
+      "name": "_stringToBytes32",
+      "outputs": [
+        {
+          "name": "result",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
           "name": "tokenOwner",
           "type": "address"
         },
@@ -165,29 +180,6 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "uint256"
-        },
-        {
-          "name": "b",
-          "type": "uint256"
-        }
-      ],
-      "name": "safeAdd",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "pure",
       "type": "function"
     },
     {
@@ -314,7 +306,7 @@
         "attributes": {
           "contractDependencies": [
             53,
-            250
+            634
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -322,7 +314,7 @@
           "linearizedBaseContracts": [
             125,
             53,
-            250
+            634
           ],
           "name": "ERC20Interface",
           "scope": 126
@@ -1201,5 +1193,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-14T10:25:05.668Z"
+  "updatedAt": "2018-03-16T12:30:13.210Z"
 }
