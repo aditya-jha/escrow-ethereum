@@ -11,9 +11,9 @@ class IndifiCoin extends React.Component {
         const transactions = JSON.parse(window.localStorage.getItem("transactions"));
         this.state = {
             accounts: [
-                {name: "Indifi", address: "0x83546836c108b2e855f69dc1038ce5fbc4fef90a", balance: 0},
+                {name: "Indifi", address: "0x706d90f4a90f78ed88737cd92f1dae56f4dd31c5", balance: 0},
                 {name: "Borrower", address: "0x0249c34a0cc78f6183b390ebc960e700ddf76269", balance: 0},
-                {name: "Lender", address: "0x706d90f4a90f78ed88737cd92f1dae56f4dd31c5", balance: 0}],
+                {name: "Lender", address: "0x83546836c108b2e855f69dc1038ce5fbc4fef90a", balance: 0}],
             transactions: transactions
         }
     }

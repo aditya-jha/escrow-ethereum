@@ -4,12 +4,14 @@
 
 export const WEB3JS_SET_REFERENCE = "WEB3JS_SET_REFERENCE";
 export const WEB3JS_NETWORK_ID = "WEB3JS_NETWORK_ID";
-export const SET_CONTRACT_REFERENCE = "SET_CONTRACT_REFERENCE";
+export const SET_INDIFI_COIN_CONTRACT_REFERENCE = "SET_INDIFI_COIN_CONTRACT_REFERENCE";
+export const SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE = "SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE";
 
 const defaultState = {
     web3js: null,
     network: null,
-    contract: null
+    indifiCoinContract: null,
+    escrowTransactionsContract: null
 };
 
 export function web3js(state = defaultState, action) {
@@ -24,11 +26,16 @@ export function web3js(state = defaultState, action) {
                 ...state,
                 network: action.network
             };
-        case SET_CONTRACT_REFERENCE:
+        case SET_INDIFI_COIN_CONTRACT_REFERENCE:
             return {
                 ...state,
                 contract: action.contract
             };
+        case SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE:
+            return {
+                ...state,
+                escrowTransactionsContract: action.contract
+            }
         default:
             return state;
     }

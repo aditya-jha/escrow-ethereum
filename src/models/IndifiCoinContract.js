@@ -2,77 +2,48 @@
  * created by aditya on 14/03/18
  */
 
+import BaseContract from "./BaseContract";
+import ContractJson from "./../../build/contracts/IndifiCoin.json";
+
 /*
  *  TODO: add a function to directly transfer tokens without allowance
- *  TODO: make from part of the class
  */
-export default class IndifiCoinContract {
-    constructor(_contract, _web3) {
-        this.contract = _contract;
-        this.web3 = _web3;
+export default class IndifiCoinContract extends BaseContract {
+    static getContractJson() {
+        return ContractJson;
     }
-
-    static callback(resolve, reject) {
-        return (error, result) => {
-            if (error) {
-                return reject(error);
-            } else {
-                return resolve(result);
-            }
-        }
-    }
-
-    getTransactionObject(gasPrice, gasLimit) {
-        return {
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            value: 0,
-            data: "",
-            from: this.web3.getAccountOwner()
-        }
-    }
-
-    setWeb3(_web3) {
-        this.web3 = _web3;
-    }
-
-    getBalance(account) {
+    
+    getBalance = (account) => {
         return new Promise((resolve, reject) => {
              this.contract.balanceOf(account, IndifiCoinContract.callback(resolve, reject));
         }).then(result => result.toNumber());
     }
 
-    createTokens(amount, from, gasLimit, gasPrice) {
+    createTokens = (amount, from, gasLimit, gasPrice) => {
         return new Promise((resolve, reject) => {
-            this.contract.createTokens.sendTransaction(amount, this.getTransactionObject(gasPrice, gasLimit), (error, result) => {
-                if (error) {
-                    return reject(error);
-                } else {
-                    return resolve(result);
-                }
-            })
+            this.contract.createTokens.sendTransaction(amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         });
     }
 
-    transferFrom(from, to, amount, gasLimit, gasPrice) {
+    transferFrom = (from, to, amount, gasLimit, gasPrice) => {
         return new Promise((resolve, reject) => {
             this.contract.transferFrom.sendTransaction(from, to, amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         });
     }
 
-    approve(spender, amount, gasLimit, gasPrice) {
+    approve = (spender, amount, gasLimit, gasPrice) => {
         return new Promise((resolve, reject) => {
             this.contract.approve.sendTransaction(spender, amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         });
     }
 
-    transferOwnerShip(to, gasPrice, gasLimit) {
+    transferOwnerShip = (to, gasPrice, gasLimit) => {
         return new Promise((resolve, reject) => {
             this.contract.transferOwnership.sendTransaction(to, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         });
     }
 
-    transferTokens(to, amount, gasPrice, gasLimit) {
+    transferTokens = (to, amount, gasPrice, gasLimit) => {
         return new Promise((resolve, reject) => {
             this.contract.transferTokens.sendTransaction(to, amount, this.getTransactionObject(), IndifiCoinContract.callback(resolve, reject));
         }); 
