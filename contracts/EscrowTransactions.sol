@@ -123,3 +123,7 @@ contract EscrowTransactions is AccessControl {
         return id;
     }
 }
+
+/*
+ * TODO: add function to get currently set policy and make virtualAccountSplitPolicyMapping internal
+*/
