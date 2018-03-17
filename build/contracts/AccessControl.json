@@ -122,7 +122,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 635,
+          "SourceUnit": 672,
           "absolutePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/Helpers.sol",
           "file": "./Helpers.sol",
           "scope": 54,
@@ -138,14 +138,14 @@
       {
         "attributes": {
           "contractDependencies": [
-            634
+            671
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             53,
-            634
+            671
           ],
           "name": "AccessControl",
           "scope": 54
@@ -162,7 +162,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Helpers",
-                  "referencedDeclaration": 634,
+                  "referencedDeclaration": 671,
                   "type": "contract Helpers"
                 },
                 "id": 3,
@@ -357,7 +357,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1062,
+                                  "referencedDeclaration": 1198,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -437,7 +437,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1065,
+                              "referencedDeclaration": 1201,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -478,7 +478,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1062,
+                                      "referencedDeclaration": 1198,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -648,7 +648,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1065,
+                              "referencedDeclaration": 1201,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -833,5 +833,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-16T12:30:13.208Z"
+  "updatedAt": "2018-03-17T10:23:19.942Z"
 }

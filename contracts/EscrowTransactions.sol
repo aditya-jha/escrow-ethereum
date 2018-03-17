@@ -19,8 +19,8 @@ contract EscrowTransactions is AccessControl {
 
     Transaction[] public transactions;
     
-    IndifiCoin indifiCoin;
-    SplitContract splitContract;
+    IndifiCoin public indifiCoin;
+    SplitContract public splitContract;
     
     // -------------------------------------------------------------------------
     // To keep the position of any transaction in the transactions array
@@ -121,6 +121,17 @@ contract EscrowTransactions is AccessControl {
         transactionHashToIndex[_hashBytes] = id;
         
         return id;
+    }
+
+    function getTransaction(uint256 id) public view returns(
+        string transactionHash,
+        uint256 amount,
+        string virtualAccountNumber
+    ) {
+        Transaction memory t = transactions[id];
+        transactionHash = _bytes32ToString(t.transactionHash);
+        amount = t.amount;
+        virtualAccountNumber = _bytes32ToString(t.virtualAccountNumber);
     }
 }
 
