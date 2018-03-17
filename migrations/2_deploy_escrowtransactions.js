@@ -7,7 +7,7 @@ const IndifiCoinContract = artifacts.require("./IndifiCoin.sol");
 const EscrowTransactions = artifacts.require("./EscrowTransactions");
 
 module.exports = (deployer) => {
-    deployer.deploy(SplitContract)
+    //  deployer.deploy(SplitContract)
     // .then(() => {
     //     return deployer.deploy(EscrowTransactions);
     // });

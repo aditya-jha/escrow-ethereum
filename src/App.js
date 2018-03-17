@@ -10,15 +10,19 @@ import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_INDIFI_COIN_CONTRACT_REFERE
 import MyWeb3 from "./models/MyWeb3";
 import IndifiCoinContract from "./models/IndifiCoinContract";
 import EscrowTransactionsContract from "./models/EscrowTransactionsContract";
-import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import _404 from "./components/_404";
 import * as URLS from "./data/Urls";
 import IndifiCoin from "./containers/IndifiCoin";
+import Home from "./containers/Home";
 import VirtualAccount from "./containers/VirtualAccount";
+import Transactions from "./containers/Transactions";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
+
+import "./styles/index.css";
 
 const store = configureStore();
 
@@ -105,11 +109,11 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <Router>
                     <div>
-                        <Link to={URLS.INDIFI_COIN}>Coin</Link>
-                        <Link to={URLS.VIRTUAL_ACCOUNTS}>Virtual Accounts</Link>
                         <Switch>
+                            <Route exact path={URLS.HOME} component={Home}/>
                             <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
                             <Route exact path={URLS.VIRTUAL_ACCOUNTS} component={VirtualAccount}/>
+                            <Route exact path={URLS.TRANSACTIONS} component={Transactions}/>
                             <Route path="*" component={_404}/>
                         </Switch>
                     </div>

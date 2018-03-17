@@ -4,6 +4,7 @@
 
 import React from "react";
 import {connect} from "react-redux";
+import Header from "./../../components/Header";
 
 class IndifiCoin extends React.Component {
     constructor(props) {
@@ -41,7 +42,8 @@ class IndifiCoin extends React.Component {
 
         return (
             <div>
-                <div className="row">
+                <Header {...this.props}/>
+                <div className="row page_margin">
                     <div className="col-6">
                         <div className="card my-3 ml-3 mt-3 mr-2">
                             <div className="card-body">
