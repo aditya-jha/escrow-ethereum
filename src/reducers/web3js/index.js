@@ -29,7 +29,7 @@ export function web3js(state = defaultState, action) {
         case SET_INDIFI_COIN_CONTRACT_REFERENCE:
             return {
                 ...state,
-                contract: action.contract
+                indifiCoinContract: action.contract
             };
         case SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE:
             return {
