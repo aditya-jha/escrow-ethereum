@@ -15,6 +15,7 @@ import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
 import _404 from "./components/_404";
 import * as URLS from "./data/Urls";
 import IndifiCoin from "./containers/IndifiCoin";
+import VirtualAccount from "./containers/VirtualAccount";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
@@ -108,6 +109,7 @@ export default class App extends React.Component {
                         <Switch>
                             <Route exact path={URLS.HOME} render={() => (<h2>Hi</h2>)}/>
                             <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
+                            <Route exact path={URLS.VIRTUAL_ACCOUNTS} component={VirtualAccount}/>
                             <Route path="*" component={_404}/>
                         </Switch>
                     </div>
