@@ -8,7 +8,9 @@ const EscrowTransactions = artifacts.require("./EscrowTransactions");
 
 module.exports = (deployer) => {
     deployer.deploy(SplitContract)
-    // .then(() => {
-    //     return deployer.deploy(EscrowTransactions);
-    // });
+     .then(() => {
+         return deployer.deploy(IndifiCoinContract);
+     }).then(() => {
+        return deployer.deploy(EscrowTransactions);
+    });
 }
