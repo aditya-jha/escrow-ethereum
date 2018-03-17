@@ -171,25 +171,6 @@ class IndifiCoin extends React.Component {
             console.log(error);
         });
     }
-
-    addTransaction = (event) => {
-        const {escrowTransactionsContract} = this.props.web3js;
-        const amount = parseFloat(this.refs.transactionAmount.value);
-        const transactionHash = this.refs.transactionHash.value;
-        const virtualAccount = this.refs.virtualAccount.value;
-
-        if (!virtualAccount || !amount || !transactionHash) {
-            return;
-        }
-
-        escrowTransactionsContract.newEscrowTransaction(transactionHash, amount, virtualAccount)
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
 }
 
 const mapStateToProps = (state) => {
