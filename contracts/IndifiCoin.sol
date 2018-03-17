@@ -6,19 +6,28 @@ import "./ERC20Interface.sol";
 
 contract IndifiCoin is ERC20Interface {
 
-    string public symbol = "INDIFI";
-    string public name = "Indifi Coin";
-    uint8 public decimals = 4;
-    uint _totalSupply = 0;
+    string public symbol;
+    string public name;
+    uint8 public decimals;
+    uint internal _totalSupply = 0;
 
     mapping(address => uint) internal balances;
     mapping(address => mapping(address => uint)) internal allowed;
+
+    mapping(address => bool) internal otherContractWithAccess;
+
+    modifier withAccess() {
+        require(otherContractWithAccess[msg.sender]);
+        _;
+    }
 
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
     function IndifiCoin() public {
-
+        symbol = "INDIFI";
+        name = "Indifi Coin";
+        decimals = 4;
     }
 
     // ------------------------------------------------------------------------
@@ -105,7 +114,7 @@ contract IndifiCoin is ERC20Interface {
     // increase total supply by new token amount
     // TODO: check this logic for from address in Transfer event
     // ------------------------------------------------------------------------
-    function createTokens(uint tokens) public onlyOwner returns (bool) {
+    function createTokens(uint tokens) public withAccess returns (bool) {
         _totalSupply = safeAdd(_totalSupply, tokens);
         balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
         Transfer(address(0), msg.sender, tokens);
@@ -122,5 +131,9 @@ contract IndifiCoin is ERC20Interface {
             _totalSupply = safeSub(_totalSupply, tokens);
         }
         Transfer(msg.sender, to, tokens);
+    }
+
+    function updateOtherContractAccess(address contractAddress, bool access) public onlyOwner returns (bool) {
+        otherContractWithAccess[contractAddress] = access;
     }
 }
