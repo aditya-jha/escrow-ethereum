@@ -72,22 +72,6 @@ class IndifiCoin extends React.Component {
                         </div>
                     </div>
                     <div className="col-6">
-                        <div className="card my-3 ml-2 mt-3 mr-3">
-                            <div className="card-body">
-                                <h5 className="card-title text-center">Transactions</h5>
-                                <h4>Add Transaction</h4>
-                                <div className="form-group row">
-                                    <input type="number" className="form-control col mr-2" ref="transactionAmount" placeholder="amount"/>
-                                    <input type="text" className="form-control col mr-2" ref="transactionHash" placeholder="transction hash"/>
-                                    <input type="text" className="form-control col" ref="virtualAccount" placeholder="virtual account number"/>
-                                </div>
-                                <button className="btn btn-primary" onClick={this.addTransaction.bind(this)}>Add Transaction</button>
-                                <hr/>
-                                <p>Total Transactions: <b>{totalTransactions}</b></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-6">
                         <div className="card my-3 ml-3 mt-3 mr-3">
                             <div className="card-body">
                                 <h5 className="card-title text-center">Create Tokens</h5>
