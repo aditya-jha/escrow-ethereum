@@ -106,8 +106,8 @@ export default class App extends React.Component {
                 <Router>
                     <div>
                         <Link to={URLS.INDIFI_COIN}>Coin</Link>
+                        <Link to={URLS.VIRTUAL_ACCOUNTS}>Virtual Accounts</Link>
                         <Switch>
-                            <Route exact path={URLS.HOME} render={() => (<h2>Hi</h2>)}/>
                             <Route exact path={URLS.INDIFI_COIN} component={IndifiCoin}/>
                             <Route exact path={URLS.VIRTUAL_ACCOUNTS} component={VirtualAccount}/>
                             <Route path="*" component={_404}/>
