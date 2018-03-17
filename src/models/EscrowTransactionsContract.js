@@ -28,7 +28,7 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
         })
     }
 
-	updateVirtualAccountConfiguration = (virtualAccount, policy, borrower, lender, gasPrice, gasLimit) => {
+	updateVirtualAccountConfiguration = (virtualAccount, policy, borrower, lender, bankAccount, ifscCode, gasPrice, gasLimit) => {
 		return new Promise((resolve, reject) => {
 			this.contract
 			.updateVirtualAccountConfiguration
@@ -37,6 +37,8 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
 				policy, 
 				borrower, 
 				lender, 
+				bankAccount,
+				ifscCode,
 				this.getTransactionObject(gasPrice, gasLimit), 
 				EscrowTransactionsContract.callback(resolve, reject)
 			);

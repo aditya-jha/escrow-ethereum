@@ -17,6 +17,15 @@ contract EscrowTransactions is AccessControl {
         uint timestamp;
     }
 
+    struct VirtualAccount {
+        bytes32 virtualAccountNumber;
+        address borrowerAddress;
+        address lenderAddress;
+        uint[] policyDetails;
+        string bankAccountNumber;
+        string ifscCode;
+    }
+
     Transaction[] public transactions;
     
     IndifiCoin public indifiCoin;
@@ -37,22 +46,14 @@ contract EscrowTransactions is AccessControl {
     // 3 - settlement done
     // -------------------------------------------------------------------------
     mapping(uint256 => uint8) public transactionIdToStatus;
-    
-    mapping(bytes32 => uint256[]) public virtualAccountSplitPolicyMapping;
-    
+
+
     // -------------------------------------------------------------------------
-    // To keep the ethereum address of the corresponding virtual account number
+    // To keep virtual account details againt virtual account number during onboarding
     // key: bytes32 - bytes32 representation of the virtual account number
-    // value: address - ethereum address of the borrower
+    // value: VirtualAccount - virtual account details
     // -------------------------------------------------------------------------
-    mapping(bytes32 => address) public borrowerAddress;
-    
-    // -------------------------------------------------------------------------
-    // To keep the ethereum address of the lender againt the virtual account number
-    // key: bytes32 - bytes32 representation of the virtual account number
-    // value: address - ethereum address of the lender
-    // -------------------------------------------------------------------------
-    mapping(bytes32 => address) public lenderAddress;
+    mapping(bytes32 => VirtualAccount) public VirtualAccounts;
     
     function EscrowTransactions() public {
         _createTransaction(0x0, 0, 0x0);
@@ -70,12 +71,21 @@ contract EscrowTransactions is AccessControl {
         string _virtualAccountNumber, 
         uint256[] _policyDetails,
         address _borrower,
-        address _lender
-    ) public onlyOwner returns (bool) {
+        address _lender,
+        string _bankAccountNumber,
+        string _ifscCode
+    ) public onlyOwner returns (bool) 
+    {
         bytes32 virtualAccountNumberBytes = _stringToBytes32(_virtualAccountNumber);
-        virtualAccountSplitPolicyMapping[virtualAccountNumberBytes] = _policyDetails;
-        borrowerAddress[virtualAccountNumberBytes] = _borrower;
-        lenderAddress[virtualAccountNumberBytes] = _lender;
+        VirtualAccount memory va = VirtualAccount({
+            virtualAccountNumber: virtualAccountNumberBytes,
+            borrowerAddress: _borrower,
+            lenderAddress: _lender,
+            policyDetails: _policyDetails,
+            bankAccountNumber: _bankAccountNumber,
+            ifscCode: _ifscCode
+        });
+        VirtualAccounts[virtualAccountNumberBytes] = va;
     }
     
     function newEscrowTransaction(string _hash, uint256 amount, string _vAccNo) public onlyOwner returns(bool) {
@@ -93,12 +103,12 @@ contract EscrowTransactions is AccessControl {
 
         // allocate coins equal to the amount into owners account
         indifiCoin.createTokens(amount);
-        uint256[] storage policyDetails = virtualAccountSplitPolicyMapping[vAccNoBytes];
+        VirtualAccount memory va = VirtualAccounts[vAccNoBytes];
         
-        int256 lenderShare = splitContract.split(amount, policyDetails);
+        int256 lenderShare = splitContract.split(amount, va.policyDetails);
         if (lenderShare != -1) {
-            indifiCoin.transferTokens(lenderAddress[vAccNoBytes], uint256(lenderShare));
-            indifiCoin.transferTokens(borrowerAddress[vAccNoBytes], safeSub(amount, uint256(lenderShare)));
+            indifiCoin.transferTokens(va.lenderAddress, uint256(lenderShare));
+            indifiCoin.transferTokens(va.borrowerAddress, safeSub(amount, uint256(lenderShare)));
             transactionIdToStatus[id] = 1; // split done
         }
         

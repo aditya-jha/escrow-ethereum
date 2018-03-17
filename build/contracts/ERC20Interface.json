@@ -263,10 +263,10 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.18;\n\nimport \"./AccessControl.sol\";\n\n// ----------------------------------------------------------------------------\n// ERC Token Standard #20 Interface\n// https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md\n// ----------------------------------------------------------------------------\ncontract ERC20Interface is AccessControl {\n    function totalSupply() public constant returns (uint);\n\n    function balanceOf(address tokenOwner) public constant returns (uint balance);\n\n    function allowance(address tokenOwner, address spender) public constant returns (uint remaining);\n\n    function transfer(address to, uint tokens) public returns (bool success);\n\n    function approve(address spender, uint tokens) public returns (bool success);\n\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n\n    event Transfer(address indexed from, address indexed to, uint tokens);\n    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);\n}",
-  "sourcePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/ERC20Interface.sol",
+  "sourcePath": "/Users/Sahil/Documents/projects/blockchain/escrow-ethereum/contracts/ERC20Interface.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/ERC20Interface.sol",
+      "absolutePath": "/Users/Sahil/Documents/projects/blockchain/escrow-ethereum/contracts/ERC20Interface.sol",
       "exportedSymbols": {
         "ERC20Interface": [
           125
@@ -290,7 +290,7 @@
       {
         "attributes": {
           "SourceUnit": 54,
-          "absolutePath": "/Users/aditya/Documents/indifi/blockchain/escrow-ethereum/contracts/AccessControl.sol",
+          "absolutePath": "/Users/Sahil/Documents/projects/blockchain/escrow-ethereum/contracts/AccessControl.sol",
           "file": "./AccessControl.sol",
           "scope": 126,
           "symbolAliases": [
@@ -306,7 +306,7 @@
         "attributes": {
           "contractDependencies": [
             53,
-            671
+            696
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -314,7 +314,7 @@
           "linearizedBaseContracts": [
             125,
             53,
-            671
+            696
           ],
           "name": "ERC20Interface",
           "scope": 126
@@ -1193,5 +1193,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-17T10:23:19.945Z"
+  "updatedAt": "2018-03-17T14:25:14.002Z"
 }
