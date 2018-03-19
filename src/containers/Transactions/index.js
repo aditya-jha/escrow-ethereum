@@ -41,7 +41,7 @@ class Transactions extends React.Component {
                         <div className="card my-3 ml-3 mt-3 mr-3">
                             <div className="card-body">
                                 <h5 className="card-title text-center">Transactions</h5>
-                                <table className="table">
+                                <table className="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>S. No.</th>
