@@ -14,7 +14,7 @@ contract IndifiCoin is ERC20Interface {
     mapping(address => uint) internal balances;
     mapping(address => mapping(address => uint)) internal allowed;
 
-    mapping(address => bool) internal otherContractWithAccess;
+    mapping(address => bool) public otherContractWithAccess;
 
     modifier withAccess() {
         require(otherContractWithAccess[msg.sender]);
@@ -116,21 +116,19 @@ contract IndifiCoin is ERC20Interface {
     // ------------------------------------------------------------------------
     function createTokens(uint tokens) public withAccess returns (bool) {
         _totalSupply = safeAdd(_totalSupply, tokens);
-        balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
-        Transfer(address(0), msg.sender, tokens);
+        balances[owner] = safeAdd(balances[msg.sender], tokens);
+        Transfer(address(0), owner, tokens);
     }
 
     // ------------------------------------------------------------------------
     // Transfer tokens of the owner to the mentioned address
     // ------------------------------------------------------------------------
-    function transferTokens(address to, uint tokens) public returns (bool) {
-        require(balances[msg.sender] >= tokens);
+    function transferTokens(address to, uint tokens) public withAccess returns (bool) {
+        require(balances[owner] >= tokens);
         balances[to] = safeAdd(balances[to], tokens);
-        balances[msg.sender] = safeSub(balances[msg.sender], tokens);
-        if (msg.sender == owner) {
-            _totalSupply = safeSub(_totalSupply, tokens);
-        }
-        Transfer(msg.sender, to, tokens);
+        balances[owner] = safeSub(balances[owner], tokens);
+        _totalSupply = safeSub(_totalSupply, tokens);
+        Transfer(owner, to, tokens);
     }
 
     function updateOtherContractAccess(address contractAddress, bool access) public onlyOwner returns (bool) {

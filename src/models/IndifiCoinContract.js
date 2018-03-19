@@ -45,7 +45,13 @@ export default class IndifiCoinContract extends BaseContract {
 
     transferTokens = (to, amount, gasPrice, gasLimit) => {
         return new Promise((resolve, reject) => {
-            this.contract.transferTokens.sendTransaction(to, amount, this.getTransactionObject(), IndifiCoinContract.callback(resolve, reject));
+            this.contract.transferTokens.sendTransaction(to, amount, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
         }); 
+    }
+
+    updateContractsWithAccess = (address, access, gasPrice, gasLimit) => {
+        return new Promise((resolve, reject) => {
+            this.contract.updateContractsWithAccess.sendTransaction(address, access, this.getTransactionObject(gasPrice, gasLimit), IndifiCoinContract.callback(resolve, reject));
+        })
     }
 }
