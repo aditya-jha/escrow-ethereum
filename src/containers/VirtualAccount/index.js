@@ -19,28 +19,36 @@ class VirtualAccount extends React.Component {
                     <div style={{width: "50%", margin: "auto"}}>
                         <div className="card my-3 ml-3 mt-3 mr-2">
                             <div className="card-body">
-                                <h5 className="card-title text-center">Borrower Details</h5>
-                                <input type="text" ref="virtualAccountNumber" placeholder="Virtual Account"/>
-                                <input type="text" ref="borrowerAddress" placeholder="Borrower Address"/>
-                                <input type="text" ref="lenderAddress" placeholder="Lender Address"/>
+                                <h5 className="card-title text-center">Virtual Account Details</h5>
+                                <div className="form-group">
+                                    <input type="text" ref="virtualAccountNumber" placeholder="Virtual Account Number" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" ref="borrowerAddress" placeholder="Borrower Wallet Address" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" ref="lenderAddress" placeholder="Lender Wallet Address" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <select ref="policyType" className="form-control">
+                                        <option value="">--Policy Type--</option>
+                                        <option value="1">Fixed</option>
+                                        <option value="2">Percent</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">    
+                                    <input type="text" ref="policyValue" placeholder="Policy Value" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" ref="bankAccountNumber" placeholder="Bank Account Number" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" ref="ifscCode" placeholder="IFSC Code" className="form-control"/>
+                                </div>
+                                <div className="form-group">
+                                    <button className="btn btn-primary form-control" onClick={this.addVirtualAccount.bind(this)}>Create Account</button>
+                                </div>
                             </div>
-
-                            <div className="card-body">
-                                <h5 className="card-title text-center">Policy Details</h5>
-                                <select ref="policyType">
-                                    <option value="">--Select--</option>
-                                    <option value="1">Fixed</option>
-                                    <option value="2">Percent</option>
-                                </select>
-                                <input type="text" ref="policyValue" placeholder="Policy Value"/>
-                            </div>
-
-                            <div className="card-body">
-                                <h5 className="card-title text-center">Bank Account Details</h5>
-                                <input type="text" ref="bankAccountNumber" placeholder="Account Number"/>
-                                <input type="text" ref="ifscCode" placeholder="IFSC Code"/>
-                            </div>
-                            <button className="btn btn-primary" onClick={this.addVirtualAccount.bind(this)}>Create Account</button>
                         </div>
                     </div>
                 </div>
