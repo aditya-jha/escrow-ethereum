@@ -14,9 +14,36 @@ class Transactions extends React.Component {
        super();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.web3js.escrowTransactionsContract && nextProps.web3js.escrowTransactionsContract) {
+            const self = this;
+            window.setTimeout(() => {
+                let transactions = window.localStorage.getItem("transactions");
+                if (transactions) {
+                    transactions = JSON.parse(transactions);
+                    Promise.all([
+                        Promise.all(transactions.map(d => nextProps.web3js.escrowTransactionsContract.getVirtualAccount(d.virtualAccountNo))),
+                        Promise.all(transactions.map(d => nextProps.web3js.escrowTransactionsContract.getTransactionStatus(d.hash)))
+                    ]).then(results => {
+                            for (let i=0; i<results[1].length; i++) {
+                                transactions[i].status = results[1][i];
+                                transactions[i].statusText = this.statusToString(results[1][i]);
+                                transactions[i].virtualAccount = results[0][i];
+                            }
+                            this.props.dispatch({
+                                type: INIT_TRANSACTIONS,
+                                transactions: transactions
+                            });
+                        })
+
+                }
+            }, 100);
+        }
+    }
+
     render() {
         const {transactions} = this.props;
-
+    
         return(
             <div>
                 <Header {...this.props}/>
@@ -58,7 +85,9 @@ class Transactions extends React.Component {
                                         <tr>
                                             {/*<th>S. No.</th>*/}
                                             <th>Transaction</th>
+                                            <th>Virtual Account Details</th>
                                             <th>Current Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,13 +95,16 @@ class Transactions extends React.Component {
                                             <tr key={t.hash}>
                                                 {/*<td>{index + 1}</td>*/}
                                                 <td>
-                                                    <ul>
+                                                    <ul className="transactions-list-item">
                                                         <li>Rs. {t.amount}</li>
                                                         <li>{t.virtualAccountNo}</li>
                                                         <li>{t.date}</li>
+                                                        <li>{t.senderName}</li>
                                                     </ul>
                                                 </td>
-                                                <td>{t.status}</td>
+                                                <td>something</td>
+                                                <td>{t.statusText}</td>
+                                                <td>{this.getAction(t.status, index)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -84,6 +116,23 @@ class Transactions extends React.Component {
             </div>
         )
     }
+
+    transactionActionHandler = (index, event) => {
+        const target = event.target;
+        const {escrowTransactionsContract} = this.props.web3js;
+        const payment = this.props.transactions.transactions[index];
+        if (payment.status === 0) {
+            // save and split
+            target.disabled = true;
+            escrowTransactionsContract.newEscrowTransaction(payment.hash, payment.amount * 10000, payment.virtualAccountNo)
+                .then(result => {
+                    console.log(result);
+                })
+                .finally(() => {
+                    target.disabled = false;
+                })
+        }
+    };
 
     addTransaction = (event) => {
         const {escrowTransactionsContract} = this.props.web3js;
@@ -121,13 +170,18 @@ class Transactions extends React.Component {
             data
         }).then(result => {
             payments = result.data.data;
+            window.localStorage.setItem("transactions", JSON.stringify(payments));
             const {escrowTransactionsContract} = this.props.web3js;
 
-            return Promise.all(payments.map(d => escrowTransactionsContract.getTransactionStatus(d.hash)))
+            return Promise.all([
+                Promise.all(payments.map(d => escrowTransactionsContract.getVirtualAccount(d.virtualAccountNo))),
+                Promise.all(payments.map(d => escrowTransactionsContract.getTransactionStatus(d.hash)))
+            ]);
         }).then(results => {
-            console.log(results);
-            for (let i=0; i<results.length; i++) {
-                payments[i].status = results[i];
+            for (let i=0; i<results[1].length; i++) {
+                payments[i].status = results[1][i];
+                payments[i].statusText = this.statusToString(results[1][i]);
+                payments[i].virtualAccount = results[0][i];
             }
             this.props.dispatch({
                 type: INIT_TRANSACTIONS,
@@ -136,6 +190,28 @@ class Transactions extends React.Component {
         }).catch(error => {
             alert("error occured");
         })
+    };
+
+    statusToString = (status) => {
+        switch (status) {
+            case 1:
+                return "Split Done";
+            default:
+                return "Not Saved";
+        }
+    };
+
+    getAction = (status, index) => {
+        switch (status) {
+            case 1:
+                return (
+                    <button className="btn btn-danger" onClick={this.transactionActionHandler.bind(this, index)}>Debit</button>
+                );
+            default:
+                return (
+                    <button className="btn btn-success" onClick={this.transactionActionHandler.bind(this, index)}>Split</button>
+                )
+        }
     }
 }
 

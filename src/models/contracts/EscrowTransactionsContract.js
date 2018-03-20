@@ -66,26 +66,50 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 	};
 
 	getTransactionStatus = (hash) => {
-		return new Promise((resolve, reject) => {
-			this.contract._stringToBytes32.call(hash, (error, result) => {
-				if (error) {
-					return reject(error);
-				} else {
-					this.contract.transactionHashToIndex.call(result, (error, result) => {
-					    if (error) {
-					        return reject(error);
+	    return new Promise((resolve, reject) => {
+            this.getByte32FromString(hash)
+                .then(result => {
+                    this.contract.transactionHashToIndex.call(result, (error, result) => {
+                        if (error) {
+                            return reject(error);
                         } else {
-					        this.contract.transactionIdToStatus.call(result.toNumber(), (error, result) => {
-					            if (error) {
-					                return reject(error);
+                            this.contract.transactionIdToStatus.call(result.toNumber(), (error, result) => {
+                                if (error) {
+                                    return reject(error);
                                 } else {
-					                resolve(result.toNumber());
+                                    resolve(result.toNumber());
                                 }
                             });
                         }
                     });
-				}
-			});
-		})
-	}
+                });
+        })
+	};
+
+	getByte32FromString = (s) => {
+	    return new Promise((resolve, reject) => {
+	        this.contract._stringToBytes32.call(s, (error, result) => {
+                if (error) {
+                    return reject(error);
+                } else {
+                    resolve(result);
+                }
+	        })
+        })
+    };
+
+	getVirtualAccount = (virtualAccountNo) => {
+	    return new Promise((resolve, reject) => {
+            this.getByte32FromString(virtualAccountNo)
+                .then(result => {
+                    this.contract.VirtualAccounts.call(result, (error, result) => {
+                        if (error) {
+                            return reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                })
+        });
+    }
  }
