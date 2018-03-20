@@ -144,7 +144,3 @@ contract EscrowTransactions is AccessControl {
         virtualAccountNumber = _bytes32ToString(t.virtualAccountNumber);
     }
 }
-
-/*
- * TODO: add function to get currently set policy and make virtualAccountSplitPolicyMapping internal
-*/
