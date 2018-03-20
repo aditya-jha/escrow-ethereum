@@ -6,7 +6,7 @@ export const INIT_TRANSACTIONS = "INIT_TRANSACTIONS";
 
 let defaultState = {
     transactions: []
-}
+};
 
 export function transactions(state = defaultState, action) {
     switch(action.type) {
@@ -14,7 +14,7 @@ export function transactions(state = defaultState, action) {
             return {
                 ...state,
                 transactions: action.transactions
-            }
+            };
         default:
             return state;
     }

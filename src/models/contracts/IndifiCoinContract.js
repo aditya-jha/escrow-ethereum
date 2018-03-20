@@ -3,7 +3,7 @@
  */
 
 import BaseContract from "./BaseContract";
-import ContractJson from "./../../build/contracts/IndifiCoin.json";
+import ContractJson from "../../../build/contracts/IndifiCoin.json";
 
 /*
  *  TODO: add a function to directly transfer tokens without allowance

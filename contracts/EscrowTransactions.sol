@@ -40,7 +40,7 @@ contract EscrowTransactions is AccessControl {
     
     // -------------------------------------------------------------------------
     // To keep the status of the incoming transaction w.r.t settlement
-    // 0 - split not done or not such transaction
+    // 0 - split not done or no such transaction
     // 1 - split in coin contract done i.e. coins have been moved by indifi to lender and borrower respectively
     // 2 - settlement request sent to bank
     // 3 - settlement done
@@ -74,8 +74,7 @@ contract EscrowTransactions is AccessControl {
         address _lender,
         string _bankAccountNumber,
         string _ifscCode
-    ) public onlyOwner returns (bool) 
-    {
+    ) public onlyOwner returns (bool) {
         bytes32 virtualAccountNumberBytes = _stringToBytes32(_virtualAccountNumber);
         VirtualAccount memory va = VirtualAccount({
             virtualAccountNumber: virtualAccountNumberBytes,
@@ -118,7 +117,18 @@ contract EscrowTransactions is AccessControl {
     function getTotalTransactions() public view returns (uint256) {
         return transactions.length - 1;
     }
-    
+
+    function getTransaction(uint256 id) public view returns(
+        string transactionHash,
+        uint256 amount,
+        string virtualAccountNumber
+    ) {
+        Transaction memory t = transactions[id];
+        transactionHash = _bytes32ToString(t.transactionHash);
+        amount = t.amount;
+        virtualAccountNumber = _bytes32ToString(t.virtualAccountNumber);
+    }
+
     function _createTransaction(bytes32 _hashBytes, uint256 amount, bytes32 _vAccNoBytes) internal returns (uint256) {
         Transaction memory t = Transaction({
             transactionHash: _hashBytes,
@@ -131,16 +141,5 @@ contract EscrowTransactions is AccessControl {
         transactionHashToIndex[_hashBytes] = id;
         
         return id;
-    }
-
-    function getTransaction(uint256 id) public view returns(
-        string transactionHash,
-        uint256 amount,
-        string virtualAccountNumber
-    ) {
-        Transaction memory t = transactions[id];
-        transactionHash = _bytes32ToString(t.transactionHash);
-        amount = t.amount;
-        virtualAccountNumber = _bytes32ToString(t.virtualAccountNumber);
     }
 }

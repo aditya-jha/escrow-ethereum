@@ -3,7 +3,7 @@
  */
 
 import BaseContract from "./BaseContract";
-import ContractJson from "./../../build/contracts/EscrowTransactions.json";
+import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 
  export default class EscrowTransactionsContract extends BaseContract {
     static getContractJson() {
@@ -14,7 +14,7 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
         return new Promise((resolve, reject) => {
         	this.contract.updateIndifiCoinAddress.sendTransaction(address, this.getTransactionObject(gasPrice, gasLimit), EscrowTransactionsContract.callback(resolve, reject));
         })
-    }
+    };
 
     setSplitPolicyContract = (address, gasPrice, gasLimit) => {
         return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
 			   EscrowTransactionsContract.callback(resolve, reject)
 			);
         })
-    }
+    };
 
 	updateVirtualAccountConfiguration = (virtualAccount, policy, borrower, lender, bankAccount, ifscCode, gasPrice, gasLimit) => {
 		return new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
 				EscrowTransactionsContract.callback(resolve, reject)
 			);
 		})
-	}
+	};
 
 	newEscrowTransaction = (hash, amount, virtualAccount, gasPrice, gasLimit) => {
 		return new Promise((resolve, reject) => {
@@ -57,11 +57,35 @@ import ContractJson from "./../../build/contracts/EscrowTransactions.json";
 				EscrowTransactionsContract.callback(resolve, reject)
 			)
 		});	
-	}
+	};
 
 	getTotalTransactions = () => {
 		return new Promise((resolve, reject) => {
 			this.contract.getTotalTransactions.call(EscrowTransactionsContract.callback(resolve, reject));
 		}).then(resut => resut.toNumber());
+	};
+
+	getTransactionStatus = (hash) => {
+		return new Promise((resolve, reject) => {
+			this.contract._stringToBytes32.call(hash, (error, result) => {
+				if (error) {
+					return reject(error);
+				} else {
+					this.contract.transactionHashToIndex.call(result, (error, result) => {
+					    if (error) {
+					        return reject(error);
+                        } else {
+					        this.contract.transactionIdToStatus.call(result.toNumber(), (error, result) => {
+					            if (error) {
+					                return reject(error);
+                                } else {
+					                resolve(result.toNumber());
+                                }
+                            });
+                        }
+                    });
+				}
+			});
+		})
 	}
  }

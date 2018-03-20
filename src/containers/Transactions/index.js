@@ -5,6 +5,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import Header from "./../../components/Header";
+import Axios from "axios";
+import * as URL from "./../../data/Urls";
+import {INIT_TRANSACTIONS} from "./../../reducers/Transactions";
 
 class Transactions extends React.Component {
     constructor(props) {
@@ -34,6 +37,15 @@ class Transactions extends React.Component {
                                     </div>
                                 </div>
                                 <button className="btn btn-primary" onClick={this.addTransaction.bind(this)}>Add Transaction</button>
+                                <hr/>
+                                <div className="row">
+                                    <div className="col-8">
+                                        <input className="form-control" ref="paymentsFile" type="file"/>
+                                    </div>
+                                    <div className="col-4">
+                                        <button className="btn btn-primary" onClick={this.uploadPaymentsFile.bind(this)}>Upload</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,16 +56,23 @@ class Transactions extends React.Component {
                                 <table className="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>S. No.</th>
+                                            {/*<th>S. No.</th>*/}
                                             <th>Transaction</th>
                                             <th>Current Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {transactions.transactions.map((t, index) => (
-                                            <tr key={t.txHash}>
-                                                <td>{index + 1}</td>
-                                                <td>{}</td>
+                                            <tr key={t.hash}>
+                                                {/*<td>{index + 1}</td>*/}
+                                                <td>
+                                                    <ul>
+                                                        <li>Rs. {t.amount}</li>
+                                                        <li>{t.virtualAccountNo}</li>
+                                                        <li>{t.date}</li>
+                                                    </ul>
+                                                </td>
+                                                <td>{t.status}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -83,6 +102,40 @@ class Transactions extends React.Component {
         .catch(error => {
             console.log(error);
         });
+    };
+
+    uploadPaymentsFile = (event) => {
+        const paymentFile = this.refs.paymentsFile.files[0];
+        if (!paymentFile) {
+            return;
+        }
+
+        const data = new FormData();
+        data.append("file", paymentFile);
+
+        let payments = [];
+        Axios.request({
+            method: "POST",
+            baseURL: "http://localhost:8082",
+            url: URL.UPLOAD_TRANSACTIONS,
+            data
+        }).then(result => {
+            payments = result.data.data;
+            const {escrowTransactionsContract} = this.props.web3js;
+
+            return Promise.all(payments.map(d => escrowTransactionsContract.getTransactionStatus(d.hash)))
+        }).then(results => {
+            console.log(results);
+            for (let i=0; i<results.length; i++) {
+                payments[i].status = results[i];
+            }
+            this.props.dispatch({
+                type: INIT_TRANSACTIONS,
+                transactions: payments
+            });
+        }).catch(error => {
+            alert("error occured");
+        })
     }
 }
 

@@ -6,3 +6,5 @@ export const HOME = "/";
 export const INDIFI_COIN = "/indifi-coin";
 export const VIRTUAL_ACCOUNTS = "/virtual-accounts";
 export const TRANSACTIONS = "/transactions";
+
+export const UPLOAD_TRANSACTIONS = "/upload-transactions-file";
