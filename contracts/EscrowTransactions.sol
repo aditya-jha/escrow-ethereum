@@ -1,12 +1,12 @@
 pragma solidity ^0.4.18;
 
 
-import "./AccessControl.sol";
+import "./VirtualAccounts.sol";
 import "./IndifiCoin.sol";
 import "./SplitContract.sol";
 
 
-contract EscrowTransactions is AccessControl {
+contract EscrowTransactions is VirtualAccounts {
     
     event NewTransaction(uint256 indexed transactionId, uint256 indexed amount);
     
@@ -15,15 +15,6 @@ contract EscrowTransactions is AccessControl {
         uint256 amount;
         bytes32 virtualAccountNumber;
         uint timestamp;
-    }
-
-    struct VirtualAccount {
-        bytes32 virtualAccountNumber;
-        address borrowerAddress;
-        address lenderAddress;
-        uint[] policyDetails;
-        string bankAccountNumber;
-        string ifscCode;
     }
 
     Transaction[] public transactions;
@@ -65,26 +56,6 @@ contract EscrowTransactions is AccessControl {
     
     function updateSplitContractAddress(address _splitContractAddress) public onlyOwner returns (bool) {
         splitContract = SplitContract(_splitContractAddress);
-    }
-    
-    function updateVirtualAccountConfiguration(
-        string _virtualAccountNumber, 
-        uint256[] _policyDetails,
-        address _borrower,
-        address _lender,
-        string _bankAccountNumber,
-        string _ifscCode
-    ) public onlyOwner returns (bool) {
-        bytes32 virtualAccountNumberBytes = _stringToBytes32(_virtualAccountNumber);
-        VirtualAccount memory va = VirtualAccount({
-            virtualAccountNumber: virtualAccountNumberBytes,
-            borrowerAddress: _borrower,
-            lenderAddress: _lender,
-            policyDetails: _policyDetails,
-            bankAccountNumber: _bankAccountNumber,
-            ifscCode: _ifscCode
-        });
-        VirtualAccounts[virtualAccountNumberBytes] = va;
     }
     
     function newEscrowTransaction(string _hash, uint256 amount, string _vAccNo) public onlyOwner returns(bool) {
