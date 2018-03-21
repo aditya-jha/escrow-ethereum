@@ -48,6 +48,9 @@ class VirtualAccount extends React.Component {
                                 <div className="form-group">
                                     <button className="btn btn-primary form-control" onClick={this.addVirtualAccount.bind(this)}>Create Account</button>
                                 </div>
+                                <div className="form-group">
+                                    <button className="btn btn-primary form-control" onClick={this.getVirtualAccounts.bind(this)}>Get Accounts</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,6 +70,17 @@ class VirtualAccount extends React.Component {
         const bankAccount = this.refs.bankAccountNumber.value;
         const ifscCode = this.refs.ifscCode.value;
         escrowTransactionsContract.updateVirtualAccountConfiguration(virtualAccountNumber, [policyType, policyValue], borrower, lender, bankAccount, ifscCode)
+        .then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    getVirtualAccounts = (event) => {
+        const {escrowTransactionsContract} = this.props.web3js;
+        escrowTransactionsContract.getAllVirtualAccounts()
         .then(result => {
             console.log(result);
         })

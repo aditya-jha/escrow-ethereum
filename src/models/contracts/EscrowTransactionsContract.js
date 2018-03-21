@@ -111,5 +111,11 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
                     });
                 })
         });
-    }
+    };
+
+	getAllVirtualAccounts = () => {
+        return new Promise((resolve, reject) => {
+			this.contract.getAllVirtualAccounts.call(EscrowTransactionsContract.callback(resolve, reject));
+		});
+    };
  }
