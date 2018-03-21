@@ -17,6 +17,11 @@ contract EscrowTransactions is AccessControl {
         uint timestamp;
     }
 
+    struct SplitShares {
+        uint256 borrowerShare;
+        uint256 lenderShare;
+    }
+
     struct VirtualAccount {
         bytes32 virtualAccountNumber;
         address borrowerAddress;
@@ -40,10 +45,11 @@ contract EscrowTransactions is AccessControl {
     
     // -------------------------------------------------------------------------
     // To keep the status of the incoming transaction w.r.t settlement
-    // 0 - split not done or no such transaction
-    // 1 - split in coin contract done i.e. coins have been moved by indifi to lender and borrower respectively
-    // 2 - settlement request sent to bank
-    // 3 - settlement done
+    // 0 - no such transaction
+    // 1 - transaction saved to blockchain
+    // 2 - split in coin contract done i.e. coins have been moved by indifi to lender and borrower respectively
+    // 3 - settlement request sent to bank
+    // 4 - settlement done
     // -------------------------------------------------------------------------
     mapping(uint256 => uint8) public transactionIdToStatus;
 
@@ -54,7 +60,9 @@ contract EscrowTransactions is AccessControl {
     // value: VirtualAccount - virtual account details
     // -------------------------------------------------------------------------
     mapping(bytes32 => VirtualAccount) public VirtualAccounts;
-    
+
+    mapping(uint256 => SplitShares) public transactionIdToSplitShares;
+
     function EscrowTransactions() public {
         _createTransaction(0x0, 0, 0x0);
     }
@@ -99,6 +107,7 @@ contract EscrowTransactions is AccessControl {
         
         // emit new transaction created
         NewTransaction(id, amount);
+        transactionIdToStatus[id] = 1; // transaction saved
 
         // allocate coins equal to the amount into owners account
         indifiCoin.createTokens(amount);
@@ -108,7 +117,8 @@ contract EscrowTransactions is AccessControl {
         if (lenderShare != -1) {
             indifiCoin.transferTokens(va.lenderAddress, uint256(lenderShare));
             indifiCoin.transferTokens(va.borrowerAddress, safeSub(amount, uint256(lenderShare)));
-            transactionIdToStatus[id] = 1; // split done
+            transactionIdToStatus[id] = 2; // split done
+            SplitShares memory ss =
         }
         
         return true;
