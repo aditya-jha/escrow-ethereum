@@ -22,6 +22,12 @@ class Transactions extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.web3js.escrowTransactionsContract) {
+            this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
+        }
+    }
+
     render() {
         const {transactions} = this.props;
 
@@ -138,6 +144,8 @@ class Transactions extends React.Component {
     }
 
     loadTransactions = (escrowTransactionsContract, dispatch) => {
+        dispatch({type: TRANSACTIONS_IS_LOADING, isLoading: true});
+
         let transactions = {};
         escrowTransactionsContract.getTotalTransactions()
             .then(result => {

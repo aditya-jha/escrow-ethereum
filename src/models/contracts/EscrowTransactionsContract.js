@@ -101,42 +101,60 @@ import IndifiCoinContract from "./IndifiCoinContract";
         })
     };
 
-	getVirtualAccount = (virtualAccountNo) => {
+	getVirtualAccount = (index) => {
 	    return new Promise((resolve, reject) => {
-            this.getByte32FromString(virtualAccountNo)
-                .then(result => {
-                	this.contract.virtualAccountsToIndex.call(result, (error, result) => {
-                		if (error) {
-                			return reject(error);
-						} else {
-                            this.contract.getVirtualAccount.call(result.toNumber(), (error, result) => {
-                                if (error) {
-                                    return reject(error);
-                                } else {
-                                    resolve({
-										virtualAccountNumber: result[0],
-                                        borrowerAddress: result[1],
-                                        lenderAddress: result[2],
-                                        policyDetails: {
-											type: result[3][0].toNumber(),
-											value: result[3][1].toNumber()
-										},
-                                        bankAccountNumber: result[4],
-                                        ifscCode: result[5]
-									});
-                                }
-                            });
-						}
-					});
-                })
-        });
+	    	this.contract.getVirtualAccount.call(index, EscrowTransactionsContract.callback(resolve, reject));
+        }).then(result => {
+            return {
+                virtualAccountNumber: result[0],
+                borrowerAddress: result[1],
+                lenderAddress: result[2],
+                policyDetails: {
+                    type: result[3][0].toNumber(),
+                    value: result[3][1].toNumber()
+                },
+                bankAccountNumber: result[4],
+                ifscCode: result[5]
+            };
+		})
     };
 
+	getVirtualAccountIndex = (virtualAccount) => {
+		return new Promise((resolve, reject) => {
+			this.getByte32FromString(virtualAccount)
+				.then(result => {
+					this.contract.virtualAccountsToIndex.call(result, EscrowTransactionsContract.callback(resolve, reject))
+				})
+		}).then(result => {
+			return result.toNumber();
+		})
+	};
+
+	getVirtualAccountByNumber = (virtualAccountNumber) => {
+		return this.getVirtualAccountIndex(virtualAccountNumber)
+			.then(result => {
+				return this.getVirtualAccount(result)
+			})
+	};
+
 	getAllVirtualAccounts = () => {
-        return new Promise((resolve, reject) => {
-			this.contract.getAllVirtualAccounts.call(EscrowTransactionsContract.callback(resolve, reject));
-		});
+		return this.getTotalVirtualAccounts()
+			.then(result => {
+				let promises = [];
+				for (let i = 1; i<=result; i++) {
+					promises.push(this.getVirtualAccount(i));
+				}
+				return Promise.all(promises);
+			});
     };
+
+	getTotalVirtualAccounts = () => {
+		return new Promise((resolve, reject) => {
+			return this.contract.getTotalVirtualAccounts.call(EscrowTransactionsContract.callback(resolve, reject));
+		}).then(result => {
+			return result.toNumber();
+		})
+	};
 
 	getSplitTransactionByIndex = (splitTransactionIndex) => {
 		return new Promise((resolve, reject) => {
@@ -165,15 +183,17 @@ import IndifiCoinContract from "./IndifiCoinContract";
 			};
 			return Promise.all([
 				this.getSplitTransactionByIndex(result[3].toNumber()),
-                this.getSplitTransactionByIndex(result[4].toNumber()),
-				this.getVirtualAccount(transaction.virtualAccountNumber)
+                this.getSplitTransactionByIndex(result[4].toNumber())
 			]);
 		}).then(results => {
 			transaction.borrowerShare = results[0];
 			transaction.lenderShare = results[1];
-			transaction.virtualAccountDetails = results[2];
+
+			return this.getVirtualAccountByNumber(transaction.virtualAccountNumber);
+		}).then(result => {
+			transaction.virtualAccountDetails = result;
 			return transaction;
-		});
+		})
 	};
 
 	waitForTransaction = (hash) => {

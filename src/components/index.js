@@ -3,7 +3,9 @@
  */
 
 import Loader from "./Loader";
+import Header from "./Header";
 
 module.exports = {
-    Loader: Loader
+    Loader: Loader,
+    Header
 };
