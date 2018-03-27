@@ -89,10 +89,10 @@ class VirtualAccount extends React.Component {
                                             className="ml-5">Total: {virtualAccounts.accounts.length}</span></h5>
                                         <table className="table table-hover">
                                             <thead>
-                                                <tr>
-                                                    <th>Virtual Account Number</th>
-                                                    <th>Details</th>
-                                                </tr>
+                                            <tr>
+                                                <th>Virtual Account Number</th>
+                                                <th>Details</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             {
@@ -150,23 +150,12 @@ class VirtualAccount extends React.Component {
 
         escrowTransactionsContract.updateVirtualAccountConfiguration(virtualAccountNumber, [policyType, policyValue], borrower, lender, bankAccount, ifscCode)
             .then(result => {
-                console.log(result);
+                this.loadVirtualAccounts(escrowTransactionsContract, this.props.dispatch);
             })
             .catch(error => {
                 console.log(error);
             });
     };
-
-    getVirtualAccounts = (event) => {
-        const {escrowTransactionsContract} = this.props.web3js;
-        escrowTransactionsContract.getAllVirtualAccounts()
-            .then(results => {
-                console.log(results);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
 }
 
 const mapStateToProps = (state) => {

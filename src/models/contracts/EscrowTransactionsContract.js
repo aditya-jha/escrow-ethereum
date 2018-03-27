@@ -13,7 +13,9 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
     setIndifiCoinContract = (address, gasPrice, gasLimit) => {
         return new Promise((resolve, reject) => {
         	this.contract.updateIndifiCoinAddress.sendTransaction(address, this.getTransactionObject(gasPrice, gasLimit), EscrowTransactionsContract.callback(resolve, reject));
-        })
+        }).then(result => {
+            return this.waitForTransaction(result);
+		})
     };
 
     setSplitPolicyContract = (address, gasPrice, gasLimit) => {
@@ -25,7 +27,9 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 			   this.getTransactionObject(gasPrice, gasLimit), 
 			   EscrowTransactionsContract.callback(resolve, reject)
 			);
-        })
+        }).then(result => {
+            return this.waitForTransaction(result);
+		})
     };
 
 	updateVirtualAccountConfiguration = (virtualAccount, policy, borrower, lender, bankAccount, ifscCode, gasPrice, gasLimit) => {
@@ -42,6 +46,8 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 				this.getTransactionObject(gasPrice, gasLimit), 
 				EscrowTransactionsContract.callback(resolve, reject)
 			);
+		}).then(result => {
+            return this.waitForTransaction(result);
 		})
 	};
 
