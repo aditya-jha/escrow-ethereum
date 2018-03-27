@@ -1,7 +1,7 @@
 /**
  * @author [Sahil Jadon]
  * @create date 2018-03-17 03:42:22
-*/
+ */
 import React from "react";
 import Header from "./../../components/Header";
 import {connect} from "react-redux";
@@ -21,13 +21,16 @@ class VirtualAccount extends React.Component {
                             <div className="card-body">
                                 <h5 className="card-title text-center">Virtual Account Details</h5>
                                 <div className="form-group">
-                                    <input type="text" ref="virtualAccountNumber" placeholder="Virtual Account Number" className="form-control"/>
+                                    <input type="text" ref="virtualAccountNumber" placeholder="Virtual Account Number"
+                                           className="form-control"/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="text" ref="borrowerAddress" placeholder="Borrower Wallet Address" className="form-control"/>
+                                    <input type="text" ref="borrowerAddress" placeholder="Borrower Wallet Address"
+                                           className="form-control"/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="text" ref="lenderAddress" placeholder="Lender Wallet Address" className="form-control"/>
+                                    <input type="text" ref="lenderAddress" placeholder="Lender Wallet Address"
+                                           className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <select ref="policyType" className="form-control">
@@ -36,20 +39,26 @@ class VirtualAccount extends React.Component {
                                         <option value="2">Percent</option>
                                     </select>
                                 </div>
-                                <div className="form-group">    
-                                    <input type="text" ref="policyValue" placeholder="Policy Value" className="form-control"/>
+                                <div className="form-group">
+                                    <input type="text" ref="policyValue" placeholder="Policy Value"
+                                           className="form-control"/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="text" ref="bankAccountNumber" placeholder="Bank Account Number" className="form-control"/>
+                                    <input type="text" ref="bankAccountNumber" placeholder="Bank Account Number"
+                                           className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" ref="ifscCode" placeholder="IFSC Code" className="form-control"/>
                                 </div>
                                 <div className="form-group">
-                                    <button className="btn btn-primary form-control" onClick={this.addVirtualAccount.bind(this)}>Create Account</button>
+                                    <button className="btn btn-primary form-control"
+                                            onClick={this.addVirtualAccount.bind(this)}>Create Account
+                                    </button>
                                 </div>
                                 <div className="form-group">
-                                    <button className="btn btn-primary form-control" onClick={this.getVirtualAccounts.bind(this)}>Get Accounts</button>
+                                    <button className="btn btn-primary form-control"
+                                            onClick={this.getVirtualAccounts.bind(this)}>Get Accounts
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +68,7 @@ class VirtualAccount extends React.Component {
 
         )
     }
-    
+
     addVirtualAccount = (event) => {
         const {escrowTransactionsContract} = this.props.web3js;
         const virtualAccountNumber = this.refs.virtualAccountNumber.value;
@@ -70,23 +79,23 @@ class VirtualAccount extends React.Component {
         const bankAccount = this.refs.bankAccountNumber.value;
         const ifscCode = this.refs.ifscCode.value;
         escrowTransactionsContract.updateVirtualAccountConfiguration(virtualAccountNumber, [policyType, policyValue], borrower, lender, bankAccount, ifscCode)
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
 
     getVirtualAccounts = (event) => {
         const {escrowTransactionsContract} = this.props.web3js;
         escrowTransactionsContract.getAllVirtualAccounts()
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 }
 
