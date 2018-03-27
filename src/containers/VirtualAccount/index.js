@@ -148,12 +148,17 @@ class VirtualAccount extends React.Component {
         const bankAccount = this.refs.bankAccountNumber.value;
         const ifscCode = this.refs.ifscCode.value;
 
+        event.persist();
+        event.target.disabled = true;
         escrowTransactionsContract.updateVirtualAccountConfiguration(virtualAccountNumber, [policyType, policyValue], borrower, lender, bankAccount, ifscCode)
             .then(result => {
                 this.loadVirtualAccounts(escrowTransactionsContract, this.props.dispatch);
             })
             .catch(error => {
                 console.log(error);
+            })
+            .finally(() => {
+                event.target.disabled = false;
             });
     };
 }
