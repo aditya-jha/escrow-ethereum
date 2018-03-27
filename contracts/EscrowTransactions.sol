@@ -71,7 +71,7 @@ contract EscrowTransactions is VirtualAccounts {
         VirtualAccount memory va = virtualAccounts[virtualAccountsToIndex[vAccNoBytes]];
 
         int256 lenderShare = splitContract.split(amount, va.policyDetails);
-        if (lenderShare != - 1) {
+        if (lenderShare != -1) {
             uint256 borrowerShare = safeSub(amount, uint256(lenderShare));
             indifiCoin.transferTokens(va.lenderAddress, uint256(lenderShare));
             indifiCoin.transferTokens(va.borrowerAddress, borrowerShare);
