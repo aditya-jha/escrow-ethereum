@@ -86,7 +86,7 @@ export default class MyWeb3 {
                 if (error) {
                     return reject(error);
                 } else {
-                    return resolve(resolve);
+                    return resolve(result);
                 }
             })
         });

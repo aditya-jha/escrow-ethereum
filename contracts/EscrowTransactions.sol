@@ -95,7 +95,8 @@ contract EscrowTransactions is VirtualAccounts {
         uint256 amount,
         string virtualAccountNumber,
         uint256 borrowerShareId,
-        uint256 lenderShareId
+        uint256 lenderShareId,
+        uint timestamp
     ) {
         Transaction memory t = transactions[id];
         transactionHash = _bytes32ToString(t.transactionHash);
@@ -103,6 +104,7 @@ contract EscrowTransactions is VirtualAccounts {
         virtualAccountNumber = _bytes32ToString(t.virtualAccountNumber);
         borrowerShareId = transactionIdToBorrowerSharesId[id];
         lenderShareId = transactionIdToLenderSharesId[id];
+        timestamp = t.timestamp;
     }
 
     function updateSplitStatusToSentForSettlement(uint256[] ids) public returns (bool) {

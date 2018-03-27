@@ -4,6 +4,7 @@
 
 import BaseContract from "./BaseContract";
 import ContractJson from "../../../build/contracts/EscrowTransactions.json";
+import IndifiCoinContract from "./IndifiCoinContract";
 
  export default class EscrowTransactionsContract extends BaseContract {
     static getContractJson() {
@@ -102,13 +103,29 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 	    return new Promise((resolve, reject) => {
             this.getByte32FromString(virtualAccountNo)
                 .then(result => {
-                    this.contract.VirtualAccounts.call(result, (error, result) => {
-                        if (error) {
-                            return reject(error);
-                        } else {
-                            resolve(result);
-                        }
-                    });
+                	this.contract.virtualAccountsToIndex.call(result, (error, result) => {
+                		if (error) {
+                			return reject(error);
+						} else {
+                            this.contract.getVirtualAccount.call(result.toNumber(), (error, result) => {
+                                if (error) {
+                                    return reject(error);
+                                } else {
+                                    resolve({
+										virtualAccountNumber: result[0],
+                                        borrowerAddress: result[1],
+                                        lenderAddress: result[2],
+                                        policyDetails: {
+											type: result[3][0].toNumber(),
+											value: result[3][1].toNumber()
+										},
+                                        bankAccountNumber: result[4],
+                                        ifscCode: result[5]
+									});
+                                }
+                            });
+						}
+					});
                 })
         });
     };
@@ -118,4 +135,70 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
 			this.contract.getAllVirtualAccounts.call(EscrowTransactionsContract.callback(resolve, reject));
 		});
     };
+
+	getSplitTransactionByIndex = (splitTransactionIndex) => {
+		return new Promise((resolve, reject) => {
+			this.contract.splitTransactions.call(splitTransactionIndex, EscrowTransactionsContract.callback(resolve, reject));
+		}).then(result => {
+			return {
+				shareAmount: result[0].toNumber(),
+				status: result[1].toNumber(),
+				id: splitTransactionIndex
+			}
+		});
+	};
+
+	getTransactionByIndex = (transactionIndex) => {
+		let transaction = {};
+
+		return new Promise((resolve, reject) => {
+			this.contract.getTransaction.call(transactionIndex, EscrowTransactionsContract.callback(resolve, reject));
+		}).then(result => {
+			transaction = {
+                hash: result[0],
+                amount: result[1].toNumber(),
+                virtualAccountNumber: result[2],
+				borrowerShareId: result[3].toNumber(),
+				lenderShareId: result[4].toNumber()
+			};
+			return Promise.all([
+				this.getSplitTransactionByIndex(result[3].toNumber()),
+                this.getSplitTransactionByIndex(result[4].toNumber()),
+				this.getVirtualAccount(transaction.virtualAccountNumber)
+			]);
+		}).then(results => {
+			transaction.borrowerShare = results[0];
+			transaction.lenderShare = results[1];
+			transaction.virtualAccountDetails = results[2];
+			return transaction;
+		});
+	};
+
+	waitForTransaction = (hash) => {
+		return new Promise((resolve, reject) => {
+            this.web3.getTransactionReceipt(hash)
+				.then(result => {
+                    if (result) {
+                        resolve(result);
+                    } else {
+                    	resolve(this.waitForTransaction(hash));
+                    }
+				});
+
+		})
+	};
+
+	updateSplitStatusToSentForSettlement = (splitTransactionId, gasPrice, gasLimit) => {
+		return new Promise((resolve, reject) => {
+			this.contract
+				.updateSplitStatusToSentForSettlement.
+				sendTransaction(
+					[splitTransactionId],
+                	this.getTransactionObject(gasPrice, gasLimit),
+                	EscrowTransactionsContract.callback(resolve, reject)
+				)
+		}).then(result => {
+			return this.waitForTransaction(result);
+		})
+	}
  }

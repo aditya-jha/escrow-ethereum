@@ -7,44 +7,25 @@ import {connect} from "react-redux";
 import Header from "./../../components/Header";
 import Axios from "axios";
 import * as URL from "./../../data/Urls";
-import {INIT_TRANSACTIONS} from "./../../reducers/Transactions";
+import {TRANSACTIONS_INIT_TRANSACTIONS} from "./../../reducers/Transactions";
+import {TRANSACTIONS_IS_LOADING, TRANSACTIONS_TOTAL_TRANSACTIONS} from "../../reducers/Transactions";
+import {Loader} from "./../../components";
 
 class Transactions extends React.Component {
     constructor(props) {
-       super();
+        super();
     }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.web3js.escrowTransactionsContract && nextProps.web3js.escrowTransactionsContract) {
-            const self = this;
-            window.setTimeout(() => {
-                let transactions = window.localStorage.getItem("transactions");
-                if (transactions) {
-                    transactions = JSON.parse(transactions);
-                    Promise.all([
-                        Promise.all(transactions.map(d => nextProps.web3js.escrowTransactionsContract.getVirtualAccount(d.virtualAccountNo))),
-                        Promise.all(transactions.map(d => nextProps.web3js.escrowTransactionsContract.getTransactionStatus(d.hash)))
-                    ]).then(results => {
-                            for (let i=0; i<results[1].length; i++) {
-                                transactions[i].status = results[1][i];
-                                transactions[i].statusText = this.statusToString(results[1][i]);
-                                transactions[i].virtualAccount = results[0][i];
-                            }
-                            this.props.dispatch({
-                                type: INIT_TRANSACTIONS,
-                                transactions: transactions
-                            });
-                        })
-
-                }
-            }, 100);
+            this.loadTransactions(nextProps.web3js.escrowTransactionsContract, nextProps.dispatch);
         }
     }
 
     render() {
         const {transactions} = this.props;
-    
-        return(
+
+        return (
             <div>
                 <Header {...this.props}/>
                 <div className="page_margin row">
@@ -54,85 +35,136 @@ class Transactions extends React.Component {
                                 <h5 className="card-title text-center">Add Transaction</h5>
                                 <div className="form-group row">
                                     <div className="col">
-                                        <input type="number" className="form-control" ref="transactionAmount" placeholder="amount"/>
+                                        <input type="number" className="form-control" ref="transactionAmount"
+                                               placeholder="amount"/>
                                     </div>
                                     <div className="col">
-                                    <input type="text" className="form-control" ref="transactionHash" placeholder="transction hash"/>
+                                        <input type="text" className="form-control" ref="transactionHash"
+                                               placeholder="transction hash"/>
                                     </div>
                                     <div className="col">
-                                        <input type="text" className="form-control col" ref="virtualAccount" placeholder="virtual account number"/>
+                                        <input type="text" className="form-control col" ref="virtualAccount"
+                                               placeholder="virtual account number"/>
                                     </div>
                                 </div>
-                                <button className="btn btn-primary" onClick={this.addTransaction.bind(this)}>Add Transaction</button>
+                                <button className="btn btn-primary" onClick={this.addTransaction.bind(this)}>Add
+                                    Transaction
+                                </button>
                                 <hr/>
                                 <div className="row">
                                     <div className="col-8">
                                         <input className="form-control" ref="paymentsFile" type="file"/>
                                     </div>
                                     <div className="col-4">
-                                        <button className="btn btn-primary" onClick={this.uploadPaymentsFile.bind(this)}>Upload</button>
+                                        <button className="btn btn-primary"
+                                                onClick={this.uploadPaymentsFile.bind(this)}>Upload
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-12">
-                        <div className="card my-3 ml-3 mt-3 mr-3">
-                            <div className="card-body">
-                                <h5 className="card-title text-center">Transactions</h5>
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            {/*<th>S. No.</th>*/}
-                                            <th>Transaction</th>
-                                            <th>Virtual Account Details</th>
-                                            <th>Current Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {transactions.transactions.map((t, index) => (
-                                            <tr key={t.hash}>
-                                                {/*<td>{index + 1}</td>*/}
-                                                <td>
-                                                    <ul className="transactions-list-item">
-                                                        <li>Rs. {t.amount}</li>
-                                                        <li>{t.virtualAccountNo}</li>
-                                                        <li>{t.date}</li>
-                                                        <li>{t.senderName}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>something</td>
-                                                <td>{t.statusText}</td>
-                                                <td>{this.getAction(t.status, index)}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                    {
+                        transactions.isLoading ?
+                            <div className="col text-center">
+                                <Loader text="Loading Transactions..."/>
                             </div>
-                        </div>
-                    </div>
+                            :
+                            <div className="col-12">
+                                <div className="card my-3 ml-3 mt-3 mr-3">
+                                    <div className="card-body">
+                                        <h5 className="card-title text-center">Transactions <span
+                                            className="ml-5">Total: {transactions.total}</span></h5>
+                                        <table className="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                {/*<th>S. No.</th>*/}
+                                                <th>Transaction</th>
+                                                <th>Virtual Account Details</th>
+                                                <th>Splits</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {transactions.transactions.map((t, index) => (
+                                                <tr key={t.hash}>
+                                                    {/*<td>{index + 1}</td>*/}
+                                                    <td>
+                                                        <ul className="transactions-list-item">
+                                                            <li>Rs. {this.convertToRupees(t.amount)}</li>
+                                                            <li>{t.timestamp}</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul className="transactions-list-item">
+                                                            <li>{t.virtualAccountDetails.virtualAccountNumber}</li>
+                                                            <li>{t.virtualAccountDetails.borrowerAddress}</li>
+                                                            <li>{t.virtualAccountDetails.lenderAddress}</li>
+                                                            <li>{t.virtualAccountDetails.policyDetails.type + "," + t.virtualAccountDetails.policyDetails.value}</li>
+                                                            <li>{t.virtualAccountDetails.bankAccountNumber}</li>
+                                                            <li>{t.virtualAccountDetails.ifscCode}</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td className="row">
+                                                        <div className="col">
+                                                            <p style={{margin: 0, padding: 0, fontWeight: "bold"}}>Borrower Share</p>
+                                                            <ul className="transactions-list-item">
+                                                                <li>Rs. {this.convertToRupees(t.borrowerShare.shareAmount)}</li>
+                                                                <li><b>{this.statusToString(t.borrowerShare.status)}</b></li>
+                                                                {t.borrowerShare.status === 1 ?
+                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.borrowerShare)}>Settle</button></li> : null}
+                                                            </ul>
+                                                        </div>
+                                                        <div className="col">
+                                                            <p style={{margin: 0, padding: 0, fontWeight: "bold"}}>Lender Share</p>
+                                                            <ul className="transactions-list-item">
+                                                                <li>Rs. {this.convertToRupees(t.lenderShare.shareAmount)}</li>
+                                                                <li><b>{this.statusToString(t.lenderShare.status)}</b></li>
+                                                                {t.lenderShare.status === 1 ?
+                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.lenderShare)}>Settle</button></li> : null}
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    }
                 </div>
             </div>
         )
     }
 
-    transactionActionHandler = (index, event) => {
-        const target = event.target;
-        const {escrowTransactionsContract} = this.props.web3js;
-        const payment = this.props.transactions.transactions[index];
-        if (payment.status === 0) {
-            // save and split
-            target.disabled = true;
-            escrowTransactionsContract.newEscrowTransaction(payment.hash, payment.amount * 10000, payment.virtualAccountNo)
-                .then(result => {
-                    console.log(result);
-                })
-                .finally(() => {
-                    target.disabled = false;
-                })
-        }
+    loadTransactions = (escrowTransactionsContract, dispatch) => {
+        let transactions = {};
+        escrowTransactionsContract.getTotalTransactions()
+            .then(result => {
+                // iterate over all transactions and load it
+                transactions.total = result;
+                let promises = [];
+                for (let i = 1; i <= result; i++) {
+                    promises.push(escrowTransactionsContract.getTransactionByIndex(i));
+                }
+                return Promise.all(promises);
+            })
+            .then(results => {
+                console.log(results);
+                dispatch({type: TRANSACTIONS_INIT_TRANSACTIONS, transactions: results});
+                dispatch({type: TRANSACTIONS_TOTAL_TRANSACTIONS, total: transactions.total});
+            })
+            .catch(error => {
+                alert(error.toString());
+            })
+            .finally(() => {
+                dispatch({type: TRANSACTIONS_IS_LOADING, isLoading: false});
+            })
     };
+
+    convertToRupees(amount) {
+        return amount/Math.pow(10, this.props.web3js.indifiCoinContract.decimals)
+    }
 
     addTransaction = (event) => {
         const {escrowTransactionsContract} = this.props.web3js;
@@ -145,12 +177,12 @@ class Transactions extends React.Component {
         }
 
         escrowTransactionsContract.newEscrowTransaction(transactionHash, amount, virtualAccount)
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     uploadPaymentsFile = (event) => {
@@ -178,13 +210,13 @@ class Transactions extends React.Component {
                 Promise.all(payments.map(d => escrowTransactionsContract.getTransactionStatus(d.hash)))
             ]);
         }).then(results => {
-            for (let i=0; i<results[1].length; i++) {
+            for (let i = 0; i < results[1].length; i++) {
                 payments[i].status = results[1][i];
                 payments[i].statusText = this.statusToString(results[1][i]);
                 payments[i].virtualAccount = results[0][i];
             }
             this.props.dispatch({
-                type: INIT_TRANSACTIONS,
+                type: TRANSACTIONS_INIT_TRANSACTIONS,
                 transactions: payments
             });
         }).catch(error => {
@@ -196,28 +228,28 @@ class Transactions extends React.Component {
         switch (status) {
             case 1:
                 return "Split Done";
+            case 2:
+                return "Pending Bank Transfer";
+            case 3:
+                return "Settled";
             default:
-                return "Not Saved";
+                return "Unknown";
         }
     };
 
-    getAction = (status, index) => {
-        switch (status) {
-            case 1:
-                return (
-                    <button className="btn btn-danger" onClick={this.transactionActionHandler.bind(this, index)}>Debit</button>
-                );
-            default:
-                return (
-                    <button className="btn btn-success" onClick={this.transactionActionHandler.bind(this, index)}>Split</button>
-                )
-        }
+    SendForSettlement = (splitTransaction, event) => {
+        debugger;
+        event.target.disabled = true;
+        this.props.web3js.escrowTransactionsContract.updateSplitStatusToSentForSettlement(splitTransaction.id)
+            .then(result => {
+                this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
+            })
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        ...state,
+        web3js: state.web3js,
         transactions: state.transactions
     }
 };

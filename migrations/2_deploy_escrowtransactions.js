@@ -8,10 +8,10 @@ const EscrowTransactions = artifacts.require("./EscrowTransactions");
 const VirtualAccounts = artifacts.require("./VirtualAccounts");
 
 module.exports = (deployer) => {
-     deployer.deploy(EscrowTransactions)
+     deployer.deploy(IndifiCoinContract)
     .then(() => {
-         return deployer.deploy(VirtualAccounts);
+         // return deployer.deploy(IndifiCoinContract);
 //     }).then(() => {
 //        return deployer.deploy(EscrowTransactions);
     });
-}
+};
