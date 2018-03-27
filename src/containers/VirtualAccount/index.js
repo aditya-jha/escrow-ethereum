@@ -86,16 +86,18 @@ class VirtualAccount extends React.Component {
                                 <div className="card my-3 ml-3 mt-3 mr-3">
                                     <div className="card-body">
                                         <h5 className="card-title text-center">Virtual Accounts<span
-                                            className="ml-5">Total: {virtualAccounts.length}</span></h5>
+                                            className="ml-5">Total: {virtualAccounts.accounts.length}</span></h5>
                                         <table className="table table-hover">
                                             <thead>
-                                                <th>Virtual Account Number</th>
-                                                <th>Details</th>
+                                                <tr>
+                                                    <th>Virtual Account Number</th>
+                                                    <th>Details</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                             {
                                                 virtualAccounts.accounts.map(account => (
-                                                    <tr>
+                                                    <tr key={account.virtualAccountNumber}>
                                                         <td>{account.virtualAccountNumber}</td>
                                                         <td>
                                                             <ul className="transactions-list-item">

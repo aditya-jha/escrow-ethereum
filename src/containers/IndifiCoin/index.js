@@ -38,7 +38,7 @@ class IndifiCoin extends React.Component {
     }
 
     render() {
-        const {accounts, totalTransactions} = this.state;
+        const {accounts} = this.state;
 
         return (
             <div>
