@@ -50,17 +50,17 @@ class Transactions extends React.Component {
                                 <button className="btn btn-primary" onClick={this.addTransaction.bind(this)}>Add
                                     Transaction
                                 </button>
-                                <hr/>
-                                <div className="row">
-                                    <div className="col-8">
-                                        <input className="form-control" ref="paymentsFile" type="file"/>
-                                    </div>
-                                    <div className="col-4">
-                                        <button className="btn btn-primary"
-                                                onClick={this.uploadPaymentsFile.bind(this)}>Upload
-                                        </button>
-                                    </div>
-                                </div>
+                                {/*<hr/>*/}
+                                {/*<div className="row">*/}
+                                    {/*<div className="col-8">*/}
+                                        {/*<input className="form-control" ref="paymentsFile" type="file"/>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="col-4">*/}
+                                        {/*<button className="btn btn-primary"*/}
+                                                {/*onClick={this.uploadPaymentsFile.bind(this)}>Upload*/}
+                                        {/*</button>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                     </div>
@@ -175,14 +175,19 @@ class Transactions extends React.Component {
         if (!virtualAccount || !amount || !transactionHash) {
             return;
         }
-
+        event.persist();
+        event.target.disabled = true;
         escrowTransactionsContract.newEscrowTransaction(transactionHash, amount, virtualAccount)
             .then(result => {
-                console.log(result);
+                this.loadTransactions(escrowTransactionsContract, this.props.dispatch);
             })
             .catch(error => {
+                alert(error.toString());
                 console.log(error);
-            });
+            })
+            .finally(() => {
+                event.target.disabled = false;
+            })
     };
 
     uploadPaymentsFile = (event) => {

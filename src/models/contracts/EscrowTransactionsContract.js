@@ -57,7 +57,9 @@ import IndifiCoinContract from "./IndifiCoinContract";
 				this.getTransactionObject(gasPrice, gasLimit),
 				EscrowTransactionsContract.callback(resolve, reject)
 			)
-		});	
+		}).then(result => {
+            return this.waitForTransaction(result);
+        })
 	};
 
 	getTotalTransactions = () => {
