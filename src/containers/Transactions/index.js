@@ -105,7 +105,7 @@ class Transactions extends React.Component {
                                                             <li>{t.virtualAccountDetails.virtualAccountNumber}</li>
                                                             <li>{t.virtualAccountDetails.borrowerAddress}</li>
                                                             <li>{t.virtualAccountDetails.lenderAddress}</li>
-                                                            <li>{t.virtualAccountDetails.policyDetails.type + "," + t.virtualAccountDetails.policyDetails.value}</li>
+                                                            <li>{t.virtualAccountDetails.policyDetails.type + ", " + t.virtualAccountDetails.policyDetails.value}</li>
                                                             <li>{t.virtualAccountDetails.bankAccountNumber}</li>
                                                             <li>{t.virtualAccountDetails.ifscCode}</li>
                                                         </ul>
@@ -117,7 +117,7 @@ class Transactions extends React.Component {
                                                                 <li>Rs. {this.convertToRupees(t.borrowerShare.shareAmount)}</li>
                                                                 <li><b>{this.statusToString(t.borrowerShare.status)}</b></li>
                                                                 {t.borrowerShare.status === 1 ?
-                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.borrowerShare)}>Settle</button></li> : null}
+                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.borrowerShare)}>Approve Split</button></li> : null}
                                                             </ul>
                                                         </div>
                                                         <div className="col">
@@ -126,7 +126,7 @@ class Transactions extends React.Component {
                                                                 <li>Rs. {this.convertToRupees(t.lenderShare.shareAmount)}</li>
                                                                 <li><b>{this.statusToString(t.lenderShare.status)}</b></li>
                                                                 {t.lenderShare.status === 1 ?
-                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.lenderShare)}>Settle</button></li> : null}
+                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.lenderShare)}>Approve Split</button></li> : null}
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -159,7 +159,7 @@ class Transactions extends React.Component {
             })
             .then(results => {
                 console.log(results);
-                dispatch({type: TRANSACTIONS_INIT_TRANSACTIONS, transactions: results});
+                dispatch({type: TRANSACTIONS_INIT_TRANSACTIONS, transactions: results.reverse()});
                 dispatch({type: TRANSACTIONS_TOTAL_TRANSACTIONS, total: transactions.total});
             })
             .catch(error => {
@@ -185,7 +185,7 @@ class Transactions extends React.Component {
         }
         event.persist();
         event.target.disabled = true;
-        escrowTransactionsContract.newEscrowTransaction(transactionHash, amount, virtualAccount)
+        escrowTransactionsContract.newEscrowTransaction(transactionHash, amount * 10000, virtualAccount)
             .then(result => {
                 this.loadTransactions(escrowTransactionsContract, this.props.dispatch);
             })

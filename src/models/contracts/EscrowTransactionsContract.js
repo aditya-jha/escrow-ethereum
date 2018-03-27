@@ -117,7 +117,7 @@ import ContractJson from "../../../build/contracts/EscrowTransactions.json";
                 lenderAddress: result[2],
                 policyDetails: {
                     type: policyType === 1 ? "Fixed" : "Percent",
-                    value: result[3][1].toNumber()
+                    value: policyType === 1 ? `Rs. ${result[3][1].toNumber()/10000 }` : `${result[3][1].toNumber()}%`
                 },
                 bankAccountNumber: result[4],
                 ifscCode: result[5]

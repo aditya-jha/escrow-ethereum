@@ -142,7 +142,7 @@ class VirtualAccount extends React.Component {
         const {escrowTransactionsContract} = this.props.web3js;
         const virtualAccountNumber = this.refs.virtualAccountNumber.value;
         const policyType = this.refs.policyType.value;
-        const policyValue = this.refs.policyValue.value;
+        let policyValue = this.refs.policyValue.value;
         const borrower = this.refs.borrowerAddress.value;
         const lender = this.refs.lenderAddress.value;
         const bankAccount = this.refs.bankAccountNumber.value;
@@ -150,6 +150,10 @@ class VirtualAccount extends React.Component {
 
         event.persist();
         event.target.disabled = true;
+
+        if (policyType == 1) {
+            policyValue = policyValue * Math.pow(10, this.props.web3js.indifiCoinContract.decimals);
+        }
         escrowTransactionsContract.updateVirtualAccountConfiguration(virtualAccountNumber, [policyType, policyValue], borrower, lender, bankAccount, ifscCode)
             .then(result => {
                 this.loadVirtualAccounts(escrowTransactionsContract, this.props.dispatch);
