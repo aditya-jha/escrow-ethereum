@@ -253,19 +253,25 @@ class Transactions extends React.Component {
     };
 
     SendForSettlement = (ids, event) => {
+        event.persist();
         event.target.disabled = true;
         this.props.web3js.escrowTransactionsContract.updateSplitStatusToSentForSettlement(ids)
             .then(result => {
                 this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
-            })
+            }).finally(() => {
+                event.target.disabled = false;
+        });
     };
 
     approveSplit = (transactionId, event) => {
+        event.persist();
         event.target.disabled = true;
         this.props.web3js.escrowTransactionsContract.splitEscrowTransaction(transactionId)
             .then(result => {
                 this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
-            })
+            }).finally(() => {
+                event.target.disabled = false;
+        });
     };
 
     getAction = (transaction) => {
