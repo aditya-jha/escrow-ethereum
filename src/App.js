@@ -6,10 +6,16 @@ import React from "react";
 import {Provider} from "react-redux";
 import Web3 from "web3";
 import configureStore from "./reducers/store";
-import {WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_INDIFI_COIN_CONTRACT_REFERENCE, SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE} from "./reducers/web3js";
+import {
+    WEB3JS_NETWORK_ID, WEB3JS_SET_REFERENCE, SET_INDIFI_COIN_CONTRACT_REFERENCE,
+    SET_ESCROW_TRANSACTIONS_CONTRACT_REFERENCE, SET_SPLIT_CONTRACT_REFERENCE
+} from "./reducers/web3js";
 import MyWeb3 from "./models/MyWeb3";
-import IndifiCoinContract from "./models/contracts/IndifiCoinContract";
-import EscrowTransactionsContract from "./models/contracts/EscrowTransactionsContract";
+import {
+    IndifiCoinContract,
+    EscrowTransactionsContract,
+    SplitContract
+} from "./models/contracts";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import _404 from "./components/_404";
@@ -58,6 +64,17 @@ export default class App extends React.Component {
                 );
                 const escrowTransactionsContractInstance = new EscrowTransactionsContract(escrowTransactionsContractRef, myWeb3Instance);
 
+                const splitContratRef = myWeb3Instance.getContractReference(
+                    SplitContract.getContractJson().networks[netId].address,
+                    SplitContract.getContractJson().abi
+                );
+                const splitContractInstance = new SplitContract(splitContratRef, myWeb3Instance);
+
+                store.dispatch({
+                    type: SET_SPLIT_CONTRACT_REFERENCE,
+                    contract: splitContractInstance
+                });
+
                 store.dispatch({
                     type: SET_INDIFI_COIN_CONTRACT_REFERENCE,
                     contract: indifiCoinContractInstance
@@ -70,6 +87,7 @@ export default class App extends React.Component {
 
                 window.indifiCoinContract = indifiCoinContractInstance;
                 window.escrowTransactionsContract = escrowTransactionsContractInstance;
+                window.splitContractReference = splitContractInstance;
 
                 indifiCoinContractEvents = indifiCoinContractRef.allEvents();
                 indifiCoinContractEvents.watch((error, event) => {

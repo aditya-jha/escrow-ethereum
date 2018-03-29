@@ -88,6 +88,7 @@ class Transactions extends React.Component {
                                                 <th>Transaction</th>
                                                 <th>Virtual Account Details</th>
                                                 <th>Splits</th>
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -116,8 +117,6 @@ class Transactions extends React.Component {
                                                             <ul className="transactions-list-item">
                                                                 <li>Rs. {this.convertToRupees(t.borrowerShare.shareAmount)}</li>
                                                                 <li><b>{this.statusToString(t.borrowerShare.status)}</b></li>
-                                                                {t.borrowerShare.status === 1 ?
-                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.borrowerShare)}>Approve Split</button></li> : null}
                                                             </ul>
                                                         </div>
                                                         <div className="col">
@@ -125,10 +124,11 @@ class Transactions extends React.Component {
                                                             <ul className="transactions-list-item">
                                                                 <li>Rs. {this.convertToRupees(t.lenderShare.shareAmount)}</li>
                                                                 <li><b>{this.statusToString(t.lenderShare.status)}</b></li>
-                                                                {t.lenderShare.status === 1 ?
-                                                                    <li><button className="btn btn-success" onClick={this.SendForSettlement.bind(this, t.lenderShare)}>Approve Split</button></li> : null}
                                                             </ul>
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        {this.getAction(t)}
                                                     </td>
                                                 </tr>
                                             ))}
@@ -239,6 +239,8 @@ class Transactions extends React.Component {
 
     statusToString = (status) => {
         switch (status) {
+            case 0:
+                return "Proposed Split";
             case 1:
                 return "Split Done";
             case 2:
@@ -250,13 +252,31 @@ class Transactions extends React.Component {
         }
     };
 
-    SendForSettlement = (splitTransaction, event) => {
-        debugger;
+    SendForSettlement = (ids, event) => {
         event.target.disabled = true;
-        this.props.web3js.escrowTransactionsContract.updateSplitStatusToSentForSettlement(splitTransaction.id)
+        this.props.web3js.escrowTransactionsContract.updateSplitStatusToSentForSettlement(ids)
             .then(result => {
                 this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
             })
+    };
+
+    approveSplit = (transactionId, event) => {
+        event.target.disabled = true;
+        this.props.web3js.escrowTransactionsContract.splitEscrowTransaction(transactionId)
+            .then(result => {
+                this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
+            })
+    };
+
+    getAction = (transaction) => {
+        switch (transaction.borrowerShare.status) {
+            case 0:
+                return (<button className="btn btn-success" onClick={this.approveSplit.bind(this, transaction.id)}>Approve Split</button>);
+            case 1:
+                return (<button className="btn btn-success" onClick={this.SendForSettlement.bind(this, [transaction.borrowerShare.id, transaction.lenderShare.id])}>Send To Bank</button>);
+            default:
+                return (<p className="text-danger">Pending Implementation</p>);
+        }
     }
 }
 

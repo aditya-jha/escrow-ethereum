@@ -41,6 +41,7 @@ contract EscrowTransactions is VirtualAccounts {
     function EscrowTransactions() public {
         _createTransaction(0x0, 0, 0x0);
         updateVirtualAccountConfiguration("", new uint[](2), address(0), address(0), "", "");
+        _createSplitTransaction(0);
     }
 
     function updateIndifiCoinAddress(address _indifiCoinAddress) public onlyOwner returns (bool) {
@@ -51,7 +52,7 @@ contract EscrowTransactions is VirtualAccounts {
         splitContract = SplitContract(_splitContractAddress);
     }
 
-    function newEscrowTransaction(string _hash, uint256 amount, string _vAccNo) public onlyOwner returns (bool) {
+    function newEscrowTransaction(string _hash, uint256 amount, string _vAccNo) public onlyOwner returns(bool) {
         // check if this transaction is new by comparing hash
         bytes32 hashBytes = _stringToBytes32(_hash);
         bytes32 vAccNoBytes = _stringToBytes32(_vAccNo);
@@ -67,22 +68,6 @@ contract EscrowTransactions is VirtualAccounts {
         // allocate coins equal to the amount into owners account
         indifiCoin.createTokens(amount);
 
-        // get VirtualAccount
-        VirtualAccount memory va = virtualAccounts[virtualAccountsToIndex[vAccNoBytes]];
-
-        int256 lenderShare = splitContract.split(amount, va.policyDetails);
-        if (lenderShare != -1) {
-            uint256 borrowerShare = safeSub(amount, uint256(lenderShare));
-            indifiCoin.transferTokens(va.lenderAddress, uint256(lenderShare));
-            indifiCoin.transferTokens(va.borrowerAddress, borrowerShare);
-
-            uint256 borrowerShareId = _createSplitTransaction(borrowerShare);
-            transactionIdToBorrowerSharesId[id] = borrowerShareId;
-
-            uint256 lenderShareId = _createSplitTransaction(uint256(lenderShare));
-            transactionIdToLenderSharesId[id] = lenderShareId;
-        }
-
         return true;
     }
 
@@ -90,7 +75,7 @@ contract EscrowTransactions is VirtualAccounts {
         return transactions.length - 1;
     }
 
-    function getTransaction(uint256 id) public view returns (
+    function getTransaction(uint256 id) public view returns(
         string transactionHash,
         uint256 amount,
         string virtualAccountNumber,
@@ -107,8 +92,30 @@ contract EscrowTransactions is VirtualAccounts {
         timestamp = t.timestamp;
     }
 
+    function splitEscrowTransaction(uint256 id) public onlyOwner returns (bool) {
+        Transaction memory t = transactions[id];
+
+        // get VirtualAccount
+        VirtualAccount memory va = virtualAccounts[virtualAccountsToIndex[t.virtualAccountNumber]];
+
+        int256 lenderShare = splitContract.split(t.amount, va.policyDetails);
+        if (lenderShare != -1) {
+            uint256 borrowerShare = safeSub(t.amount, uint256(lenderShare));
+            indifiCoin.transferTokens(va.lenderAddress, uint256(lenderShare));
+            indifiCoin.transferTokens(va.borrowerAddress, borrowerShare);
+
+            uint256 borrowerShareId = _createSplitTransaction(borrowerShare);
+            transactionIdToBorrowerSharesId[id] = borrowerShareId;
+
+            uint256 lenderShareId = _createSplitTransaction(uint256(lenderShare));
+            transactionIdToLenderSharesId[id] = lenderShareId;
+        }
+
+        return true;
+    }
+
     function updateSplitStatusToSentForSettlement(uint256[] ids) public returns (bool) {
-        for (uint256 i = 0; i < ids.length; i++) {
+        for (uint256 i = 0; i< ids.length; i++) {
             SplitTransaction memory st = splitTransactions[ids[i]];
             if (st.status == 1) {
                 st.status = 2;
@@ -118,7 +125,7 @@ contract EscrowTransactions is VirtualAccounts {
     }
 
     function updateSplitStatusToSettled(uint256[] ids) public returns (bool) {
-        for (uint256 i = 0; i < ids.length; i++) {
+        for (uint256 i = 0; i< ids.length; i++) {
             SplitTransaction memory st = splitTransactions[ids[i]];
             if (st.status == 2) {
                 st.status = 3;
@@ -127,10 +134,10 @@ contract EscrowTransactions is VirtualAccounts {
         }
     }
 
-    function _createSplitTransaction(uint256 _amount) internal returns (uint256) {
+    function _createSplitTransaction(uint256 _amount) internal returns(uint256) {
         SplitTransaction memory st = SplitTransaction({
-            shareAmount : _amount,
-            status : 1
+            shareAmount: _amount,
+            status: 1
             });
 
         uint256 id = splitTransactions.push(st) - 1;
@@ -139,11 +146,11 @@ contract EscrowTransactions is VirtualAccounts {
 
     function _createTransaction(bytes32 _hashBytes, uint256 amount, bytes32 _vAccNoBytes) internal returns (uint256) {
         Transaction memory t = Transaction({
-            transactionHash : _hashBytes,
-            amount : amount,
-            virtualAccountNumber : _vAccNoBytes,
-            timestamp : now
-        });
+            transactionHash: _hashBytes,
+            amount: amount,
+            virtualAccountNumber: _vAccNoBytes,
+            timestamp: now
+            });
 
         uint256 id = transactions.push(t) - 1;
         transactionHashToIndex[_hashBytes] = id;

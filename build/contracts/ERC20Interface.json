@@ -306,7 +306,7 @@
         "attributes": {
           "contractDependencies": [
             53,
-            811
+            843
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -314,7 +314,7 @@
           "linearizedBaseContracts": [
             125,
             53,
-            811
+            843
           ],
           "name": "ERC20Interface",
           "scope": 126
@@ -1193,5 +1193,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-21T13:51:19.372Z"
+  "updatedAt": "2018-03-29T07:01:40.785Z"
 }
