@@ -19,6 +19,9 @@ class Header extends React.Component {
         }, {
             name: "Coin",
             href: URL.INDIFI_COIN
+        }, {
+            name: "User View",
+            href: URL.USER_VIEW
         }]
     }
 
