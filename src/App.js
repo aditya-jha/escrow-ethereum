@@ -32,6 +32,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap";
 
 import "./styles/index.css";
+import {USER_VIEW_SET_ACCOUNT_OWNER} from "./reducers/UserView";
 
 const store = configureStore();
 
@@ -52,6 +53,11 @@ export default class App extends React.Component {
             store.dispatch({
                 type: WEB3JS_SET_REFERENCE,
                 web3js: myWeb3Instance
+            });
+
+            store.dispatch({
+                type: USER_VIEW_SET_ACCOUNT_OWNER,
+                accountOwner: myWeb3Instance.getAccountOwner()
             });
 
             myWeb3Instance.getEthereumNetworkVersion().then(netId => {

@@ -14,6 +14,18 @@ class UserView extends React.Component {
         super();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.web3js.escrowTransactionsContract && nextProps.web3js.escrowTransactionsContract) {
+            this.loadTransactions(nextProps.web3js.escrowTransactionsContract, nextProps.dispatch);
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.web3js.escrowTransactionsContract) {
+            this.loadTransactions(this.props.web3js.escrowTransactionsContract, this.props.dispatch);
+        }
+    }
+
     render() {
         return (
             <div>
@@ -28,7 +40,8 @@ class UserView extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        ...state
+        web3js: state.web3js,
+        userView: state.userView
     }
 };
 
