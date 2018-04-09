@@ -31,4 +31,4 @@ Escrow Ethereum is an Ethereum DAPP, a scaled down solidity port of the Escrow S
 
 > npm run start
 
-Now you can access the DAPP on [localhost](http://localhost:3001)
+Now you can access the DAPP on [localhost:3000](http://localhost:3000)
