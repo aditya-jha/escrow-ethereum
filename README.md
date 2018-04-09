@@ -1,11 +1,10 @@
 # Escrow Ethereum
 
-----
 ## What is project about?
 Escrow Ethereum is an Ethereum DAPP, a scaled down solidity port of the Escrow Solutions. The live version of the product uses virtual accounts and relational database. We are porting to
  Ethereum based DAPP.
 
-----
+
 ## Running the  project
 * Install truffle.js globally
 
