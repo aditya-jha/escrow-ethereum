@@ -465,8 +465,8 @@
       {
         "attributes": {
           "contractDependencies": [
-            125,
             53,
+            125,
             843
           ],
           "contractKind": "contract",
@@ -826,7 +826,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1466,
+                              "referencedDeclaration": 1523,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -876,7 +876,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1463,
+                                      "referencedDeclaration": 1520,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1199,7 +1199,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1467,
+                              "referencedDeclaration": 1524,
                               "type": "function () pure",
                               "value": "revert"
                             },
@@ -1635,7 +1635,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1463,
+                                      "referencedDeclaration": 1520,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1733,7 +1733,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1463,
+                                          "referencedDeclaration": 1520,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -2008,7 +2008,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1463,
+                                  "referencedDeclaration": 1520,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2271,7 +2271,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1463,
+                                          "referencedDeclaration": 1520,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -2394,7 +2394,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1463,
+                                  "referencedDeclaration": 1520,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2868,7 +2868,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1463,
+                                      "referencedDeclaration": 1520,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -2995,7 +2995,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1463,
+                                          "referencedDeclaration": 1520,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4174,7 +4174,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1463,
+                                          "referencedDeclaration": 1520,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4530,7 +4530,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1466,
+                              "referencedDeclaration": 1523,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5416,5 +5416,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-29T07:03:08.793Z"
+  "updatedAt": "2018-04-09T04:58:35.237Z"
 }

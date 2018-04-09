@@ -1,8 +1,17 @@
 "use strict";
 
 const HDWalletProvider = require("truffle-hdwallet-provider");
-const INFURA_KEY = "oZl5mQY289KieRzfBoeF";
-const INDIFI_ACCOUNT_MNEMONIC = "journey peanut cruise anxiety spoon virus uncover like dice true strategy mutual";
+const fs = require("fs");
+const path = require("path");
+
+let secrets = {};
+const secretFilePath = path.resolve(__dirname, "secret.config.json");
+if (fs.existsSync(secretFilePath)) {
+    secrets = JSON.parse(fs.readFileSync(secretFilePath).toString());
+}
+
+const INFURA_KEY = secrets.INFURA_KEY || process.env.ESCROW_INFURA_KEY;
+const INDIFI_ACCOUNT_MNEMONIC = secrets.INDIFI_ACCOUNT_MNEMONIC || process.env.ESCROW_INDIFI_ACCOUNT_MNEMONIC;
 
 module.exports = {
     // See <http://truffleframework.com/docs/advanced/configuration>
