@@ -177,7 +177,12 @@ export default class EscrowTransactionsContract extends BaseContract {
 
     getProposedSplit = (amount, policyDetails) => {
         let policyType = policyDetails.type === "Fixed" ? 1 : 2;
-        let policyValue = parseFloat(policyDetails.value.split(" ")[1]) * Math.pow(10, 4);
+        let policyValue;
+        if (policyType === 2) {
+            policyValue = policyDetails.value.replace("%", '');
+        } else {
+            policyValue = policyValue = parseFloat(policyDetails.value.split(" ")[1]) * Math.pow(10, 4);
+        }
         return window.splitContractReference.split(amount, [policyType, policyValue])
             .then(result => {
                 let lenderShare = result;

@@ -242,7 +242,7 @@ class Transactions extends React.Component {
             case 0:
                 return "Proposed Split";
             case 1:
-                return "Split Done";
+                return "Split Approved";
             case 2:
                 return "Pending Bank Transfer";
             case 3:
@@ -281,6 +281,7 @@ class Transactions extends React.Component {
             case 1:
                 return (<button className="btn btn-success" onClick={this.SendForSettlement.bind(this, [transaction.borrowerShare.id, transaction.lenderShare.id])}>Send To Bank</button>);
             default:
+                // return (<p className="text-danger">Pending Implementation</p>);
                 return (<p className="text-danger">Pending Implementation</p>);
         }
     }
